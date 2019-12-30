@@ -26,6 +26,7 @@ Apify.main(async () => {
     // to make UI more human readable, inputSchema was changed to seconds
     ['timeout', 'randomWaitBetweenRequests', 'pageLoadTimeout', 'pageFunctionTimeout'].forEach((key) => {
         input[key] = input[key] * 1000;
+        log.info( key + ": " + input[key]);
     });
     
 
