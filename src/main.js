@@ -21,6 +21,13 @@ Apify.main(async () => {
     ['timeout', 'maxCrawledPagesPerSlave', 'randomWaitBetweenRequests', 'pageLoadTimeout', 'pageFunctionTimeout', 'maxParallelRequests', 'maxPageRetryCount'].forEach((key) => {
         if (typeof input[key] !== 'number') input[key] = inputSchema.properties[key].default;
     });
+    
+    // change the inputs values to millseconds from Seconds
+    // to make UI more human readable, inputSchema was changed to seconds
+    ['timeout', 'randomWaitBetweenRequests', 'pageLoadTimeout', 'pageFunctionTimeout'].forEach((key) => {
+        input[key] = input[key] * 1000;
+    });
+    
 
     // Set up finish webhook
     if (input.finishWebhookUrl) {
@@ -50,11 +57,7 @@ Apify.main(async () => {
     }
 
     const requestQueue = await Apify.openRequestQueue();
-    
-    // create named dataset
-    const datasetName = (process.env.APIFY_ACTOR_RUN_ID || null);
-    log.info(datasetName);
-    //const dataset = await Apify.openDataset(datasetName);
+
     const dataset = await Apify.openDataset();
 
     const crawler = new PhantomCrawler({
@@ -65,7 +68,7 @@ Apify.main(async () => {
 
     await crawler.run();   
 
-    const datasetId = dataset.datasetId;
+    
     
     async function loadResults(datasetId, process, offset){  
     const limit = 10000;
@@ -81,10 +84,16 @@ Apify.main(async () => {
         await loadResults(datasetId, process, offset + limit);
         }
     };
+        
+    // create named dataset with Actor Run ID
+    const datasetName = (process.env.APIFY_ACTOR_RUN_ID || null);
+    log.info("datasetName: " + datasetName);  
+    const namedDataset = await Apify.openDataset(datasetName);   
     
-    const output = await Apify.openDataset(datasetName);   
+    const datasetId = dataset.datasetId;
+    // load the data from datasetId and save into namedDataset
     await loadResults(datasetId, async (items) => {
-            await output.pushData(items);
+            await namedDataset.pushData(items);
         });
       
     if (datasetId) {
