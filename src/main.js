@@ -50,7 +50,10 @@ Apify.main(async () => {
     }
 
     const requestQueue = await Apify.openRequestQueue();
-    const dataset = await Apify.openDataset();
+    
+    // create named dataset
+    const datasetName = ${JSON.stringify(process.env.APIFY_ACTOR_RUN_ID || null)};
+    const dataset = await Apify.openDataset(datasetName);
 
     const crawler = new PhantomCrawler({
         input,
@@ -58,7 +61,7 @@ Apify.main(async () => {
         dataset,
     });
 
-    await crawler.run();
+    await crawler.run();   
 
     const datasetId = dataset.datasetId;
     if (datasetId) {
