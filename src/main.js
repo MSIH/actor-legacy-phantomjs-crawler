@@ -109,10 +109,11 @@ https://api.apify.com/v2/datasets/${datasetId}/items?format=json&simplified=1`);
         log.info('Crawler finished.');
     }
     
-    // Send mail
-    const result = await Apify.call('apify/send-mail', {
+       // Send mail
+    const subject = 'Task Number: ' + process.env.APIFY_ACTOR_RUN_ID;
+     const result = await Apify.call('apify/send-mail', {
         to: 'bschneider@msih.com',
-        'Task Number: ' + process.env.APIFY_ACTOR_RUN_ID,
+        subject,
         'Completed',
         ,
         ,
