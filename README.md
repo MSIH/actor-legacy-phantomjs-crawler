@@ -1,4 +1,4 @@
-# Legacy PhantomJS Crawler
+# MSIH PhantomJS Crawler
 
 This actor implements the legacy Apify Crawler product.
 It uses the [PhantomJS](http://phantomjs.org/) headless browser to recursively
