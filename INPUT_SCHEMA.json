@@ -126,9 +126,7 @@
             "type": "boolean",
             "nullable": true,
             "description": "Indicates that the URL fragment identifier (i.e. <code>http://example.com/page#<b>this-guy-here</b></code>) should be considered when matching a URL against a Pseudo-URL or when checking whether a page has already been visited. Typically, URL fragments are used as internal page anchors and therefore they should be ignored because they don't represent separate pages. However, many AJAX-based website nowadays use URL fragment to represent page parameters; in such cases, this option should be enabled.",
-            "default": false,
-            "groupCaption": "Options",
-            "groupDescription": "Various crawler settings"
+            "default": false
         },
         "disableWebSecurity": {
             "title": "Disable web security",
@@ -179,7 +177,7 @@
             "description": "This field has been deprecated and its value is ignored. To set the execution timeout, use the actor run timeout option instead.",
             "minimum": 1,
             "maximum": 3600,
-            "default": 60,
+            "default": 3600,
             "unit": "seconds"
         },
         "resourceTimeout": {
