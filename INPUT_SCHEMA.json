@@ -177,20 +177,20 @@
             "type": "integer",
             "nullable": true,
             "description": "Timeout for network resources loaded by the crawler, in milliseconds.",
-            "minimum": 100,
-            "maximum": 1000000,
-            "default": 30000,
-            "unit": "milliseconds"
+            "minimum": 1,
+            "maximum": 3600,
+            "default": 60,
+            "unit": "seconds"
         },
         "pageLoadTimeout": {
             "title": "Page load timeout",
             "type": "integer",
             "nullable": true,
             "description": "Timeout for web page load, in milliseconds. If the web page does not load in this time frame, it is considered to have failed and will be retried, similarly as with other page load errors.",
-            "minimum": 100,
-            "maximum": 1000000,
-            "default": 60000,
-            "unit": "milliseconds"
+            "minimum": 1,
+            "maximum": 3600,
+            "default": 60,
+            "unit": "seconds"
         },
         "pageFunctionTimeout": {
             "title": "Page function timeout",
@@ -198,9 +198,9 @@
             "nullable": true,
             "description": "Timeout for the asynchronous part of the <b>Page function</b>, in milliseconds. Note that this value is only applied if your page function runs code in the background, i.e. when it invokes <code>context.willFinishLater()</code>. The page function itself always runs to completion regardless of the timeout.",
             "minimum": 0,
-            "maximum": 3600000,
-            "default": 600000,
-            "unit": "milliseconds"
+            "maximum": 3600,
+            "default": 60,
+            "unit": "seconds"
         },
         "maxInfiniteScrollHeight": {
             "title": "Infinite scroll height",
@@ -216,10 +216,10 @@
             "type": "integer",
             "nullable": true,
             "description": "This option forces the crawler to ensure a minimum time interval between opening two web pages, in order to prevent it from overloading the target server. The actual minimum time is a random value drawn from a Gaussian distribution with a mean specified by your setting (in milliseconds) and a standard deviation corresponding to 25% of the mean. The minimum value is 1000 milliseconds, the crawler never issues requests in shorter intervals than 1000 milliseconds.",
-            "minimum": 1000,
-            "maximum": 1000000,
-            "default": 1000,
-            "unit": "milliseconds"
+            "minimum": 1,
+            "maximum": 3600,
+            "default": 1,
+            "unit": "seconds"
         },
         "maxCrawledPagesPerSlave": {
             "title": "Max pages per IP address",
@@ -263,7 +263,9 @@
             "type": "object",
             "nullable": false,
             "description": "Specifies the type of proxy servers that will be used by the crawler in order to hide its origin.",
-            "editor": "proxy"
+            "editor": "proxy",
+            "prefill": {"useApifyProxy": true},
+            "default": {"useApifyProxy": true},
         },
         "proxyType": {
             "title": "Proxy type (legacy)",
