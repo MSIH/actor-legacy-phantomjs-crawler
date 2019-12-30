@@ -266,6 +266,7 @@
             "editor": "proxy",
             "prefill": {"useApifyProxy": true},
             "default": {"useApifyProxy": true}
+
         },
         "proxyType": {
             "title": "Proxy type (legacy)",
