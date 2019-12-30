@@ -46,6 +46,30 @@
             "editor": "textfield",
             "prefill": "a:not([rel=nofollow])"
         },
+        "proxyConfiguration": {
+            "title": "Proxy configuration",
+            "type": "object",
+            "nullable": false,
+            "description": "Specifies the type of proxy servers that will be used by the crawler in order to hide its origin.",
+            "editor": "proxy",
+            "prefill": {"useApifyProxy": true},
+            "default": {"useApifyProxy": true}
+
+        },
+        "injectJQuery": {
+            "title": "Inject jQuery",
+            "type": "boolean",
+            "nullable": true,
+            "description": "Indicates that the <a href='http://jquery.com' target='_blank' rel='noopener'>jQuery</a> library should be injected into each page before <b>Page function</b> is invoked. Note that the jQuery object will not be registered into global namespace in order to avoid conflicts with libraries used by the web page. It can only be accessed through <code>context.jQuery</code>.",
+            "default": true
+        },
+        "injectUnderscoreJs": {
+            "title": "Inject Underscore.js",
+            "type": "boolean",
+            "nullable": true,
+            "description": "Indicates that the <a href='http://underscorejs.org' target='_blank' rel='noopener'>Underscore.js</a> library should be injected into each page before <b>Page function</b> is invoked. Note that the Underscore object will not be registered into global namespace in order to avoid conflicts with libraries used by the web page. It can only be accessed through <code>context.underscoreJs</code>.",
+            "default": false
+        },
         "pageFunction": {
             "title": "Page function",
             "type": "string",
@@ -62,41 +86,25 @@
             "prefill": "function interceptRequest(context, newRequest) {\n    // called whenever the crawler finds a link to a new page,\n    // use it to override default behavior\n    return newRequest;\n}\n",
             "editor": "javascript"
         },
-        "considerUrlFragment": {
-            "title": "URL #fragments identify unique pages",
+        "verboseLog": {
+            "title": "Verbose log",
             "type": "boolean",
             "nullable": true,
-            "description": "Indicates that the URL fragment identifier (i.e. <code>http://example.com/page#<b>this-guy-here</b></code>) should be considered when matching a URL against a Pseudo-URL or when checking whether a page has already been visited. Typically, URL fragments are used as internal page anchors and therefore they should be ignored because they don't represent separate pages. However, many AJAX-based website nowadays use URL fragment to represent page parameters; in such cases, this option should be enabled.",
-            "default": false,
-            "groupCaption": "Options",
-            "groupDescription": "Various crawler settings"
+            "description": "If enabled, the log will also contain DEBUG messages. Note that this setting will dramatically slow down the crawler as well as your web browser and increase the log size.",
+            "default": false
         },
         "loadImages": {
             "title": "Download HTML images",
             "type": "boolean",
             "nullable": true,
             "description": "Indicates whether the crawler should load HTML images, both those included using the <code>&lt;img&gt;</code> tag as well as those included in CSS styles. Disable this feature after you have fine-tuned your crawler in order to increase crawling performance and reduce your bandwidth costs.",
-            "default": true
+            "default": false
         },
         "loadCss": {
             "title": "Download CSS files",
             "type": "boolean",
             "nullable": true,
             "description": "Indicates whether the crawler should load CSS stylesheet files. Disable this feature after you have fine-tuned your crawler in order to increase crawling performance and reduce your bandwidth costs.",
-            "default": true
-        },
-        "injectJQuery": {
-            "title": "Inject jQuery",
-            "type": "boolean",
-            "nullable": true,
-            "description": "Indicates that the <a href='http://jquery.com' target='_blank' rel='noopener'>jQuery</a> library should be injected into each page before <b>Page function</b> is invoked. Note that the jQuery object will not be registered into global namespace in order to avoid conflicts with libraries used by the web page. It can only be accessed through <code>context.jQuery</code>.",
-            "default": true
-        },
-        "injectUnderscoreJs": {
-            "title": "Inject Underscore.js",
-            "type": "boolean",
-            "nullable": true,
-            "description": "Indicates that the <a href='http://underscorejs.org' target='_blank' rel='noopener'>Underscore.js</a> library should be injected into each page before <b>Page function</b> is invoked. Note that the Underscore object will not be registered into global namespace in order to avoid conflicts with libraries used by the web page. It can only be accessed through <code>context.underscoreJs</code>.",
             "default": false
         },
         "ignoreRobotsTxt": {
@@ -113,12 +121,14 @@
             "description": "Indicates that child frames included using FRAME or IFRAME tags will not be loaded by the crawler. This might improve crawling performance. As a side-effect, JavaScript redirects issued by the page before it was completely loaded will not be performed, which might be useful in certain situations.",
             "default": false
         },
-        "verboseLog": {
-            "title": "Verbose log",
+        "considerUrlFragment": {
+            "title": "URL #fragments identify unique pages",
             "type": "boolean",
             "nullable": true,
-            "description": "If enabled, the log will also contain DEBUG messages. Note that this setting will dramatically slow down the crawler as well as your web browser and increase the log size.",
-            "default": false
+            "description": "Indicates that the URL fragment identifier (i.e. <code>http://example.com/page#<b>this-guy-here</b></code>) should be considered when matching a URL against a Pseudo-URL or when checking whether a page has already been visited. Typically, URL fragments are used as internal page anchors and therefore they should be ignored because they don't represent separate pages. However, many AJAX-based website nowadays use URL fragment to represent page parameters; in such cases, this option should be enabled.",
+            "default": false,
+            "groupCaption": "Options",
+            "groupDescription": "Various crawler settings"
         },
         "disableWebSecurity": {
             "title": "Disable web security",
@@ -257,16 +267,6 @@
             "editor": "keyValue",
             "placeholderKey": "Name",
             "placeholderValue": "Value"
-        },
-        "proxyConfiguration": {
-            "title": "Proxy configuration",
-            "type": "object",
-            "nullable": false,
-            "description": "Specifies the type of proxy servers that will be used by the crawler in order to hide its origin.",
-            "editor": "proxy",
-            "prefill": {"useApifyProxy": true},
-            "default": {"useApifyProxy": true}
-
         },
         "proxyType": {
             "title": "Proxy type (legacy)",
