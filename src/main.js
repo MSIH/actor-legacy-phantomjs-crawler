@@ -54,7 +54,8 @@ Apify.main(async () => {
     // create named dataset
     const datasetName = (process.env.APIFY_ACTOR_RUN_ID || null);
     log.info(datasetName);
-    const dataset = await Apify.openDataset(datasetName);
+    //const dataset = await Apify.openDataset(datasetName);
+    const dataset = await Apify.openDataset();
 
     const crawler = new PhantomCrawler({
         input,
@@ -65,6 +66,27 @@ Apify.main(async () => {
     await crawler.run();   
 
     const datasetId = dataset.datasetId;
+    
+    async function loadResults(datasetId, process, offset){  
+    const limit = 10000;
+    if(!offset){offset = 0;}
+    const newItems = await Apify.client.datasets.getItems({
+        datasetId, 
+        offset,
+        limit
+    });
+    if(newItems && (newItems.length || (newItems.items && newItems.items.length))){
+        if(newItems.length){await process(newItems);}
+        else if(newItems.items && newItems.items.length){await process(newItems.items);}
+        await loadResults(datasetId, process, offset + limit);
+        }
+    };
+    
+    const output = await Apify.openDataset(datasetName);   
+    await loadResults(datasetId, async (items) => {
+            await output.pushData(items);
+        });
+      
     if (datasetId) {
         log.info(`Crawler finished.
 
