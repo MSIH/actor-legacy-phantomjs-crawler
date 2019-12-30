@@ -113,8 +113,8 @@ https://api.apify.com/v2/datasets/${datasetId}/items?format=json&simplified=1`);
     const subject = 'Task Number: ' + process.env.APIFY_ACTOR_RUN_ID;
      const result = await Apify.call('apify/send-mail', {
         to: 'bschneider@msih.com',
-        subject,
-        'Completed',
+        subject: subject,
+        text: 'Completed',
         ,
         ,
     });
