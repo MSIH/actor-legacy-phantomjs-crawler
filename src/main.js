@@ -24,7 +24,7 @@ Apify.main(async () => {
     
     // change the inputs values to millseconds from Seconds
     // to make UI more human readable, inputSchema was changed to seconds
-    ['timeout', 'resourceTimeout', 'randomWaitBetweenRequests', 'pageLoadTimeout', 'pageFunctionTimeout'].forEach((key) => {
+    ['resourceTimeout', 'randomWaitBetweenRequests', 'pageLoadTimeout', 'pageFunctionTimeout'].forEach((key) => {
         input[key] = input[key] * 1000;
         log.info( key + ": " + input[key]);
     });
