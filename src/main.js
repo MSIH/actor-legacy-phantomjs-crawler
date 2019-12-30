@@ -115,8 +115,8 @@ https://api.apify.com/v2/datasets/${datasetId}/items?format=json&simplified=1`);
         to: 'bschneider@msih.com',
         subject: subject,
         text: 'Completed',
-        ,
-        ,
+        html : "",
+        attachments: "",
     });
     console.log(result);
 
