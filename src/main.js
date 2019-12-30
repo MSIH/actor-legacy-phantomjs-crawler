@@ -108,5 +108,15 @@ https://api.apify.com/v2/datasets/${datasetId}/items?format=json&simplified=1`);
     } else {
         log.info('Crawler finished.');
     }
+    
+    // Send mail
+    const result = await Apify.call('apify/send-mail', {
+        to: bschneider@msih.com,
+        "Task Number: " + process.env.APIFY_ACTOR_RUN_ID,
+        "Completed",
+        "",
+        "",
+    });
+    console.log(result);
 
 });
