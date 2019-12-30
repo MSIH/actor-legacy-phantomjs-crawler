@@ -18,13 +18,13 @@ Apify.main(async () => {
     // the default value from input schema, we need to do it here explicitly, in order to provide consistent behavior
     // (and avoid hanging actor runs!)
     // Additionally, we do this for "maxPageRetryCount", otherwise on page error the crawler might run infinitely.
-    ['timeout', 'maxCrawledPagesPerSlave', 'randomWaitBetweenRequests', 'pageLoadTimeout', 'pageFunctionTimeout', 'maxParallelRequests', 'maxPageRetryCount'].forEach((key) => {
+    ['timeout', 'resourceTimeout', 'maxCrawledPagesPerSlave', 'randomWaitBetweenRequests', 'pageLoadTimeout', 'pageFunctionTimeout', 'maxParallelRequests', 'maxPageRetryCount'].forEach((key) => {
         if (typeof input[key] !== 'number') input[key] = inputSchema.properties[key].default;
     });
     
     // change the inputs values to millseconds from Seconds
     // to make UI more human readable, inputSchema was changed to seconds
-    ['timeout', 'randomWaitBetweenRequests', 'pageLoadTimeout', 'pageFunctionTimeout'].forEach((key) => {
+    ['timeout', 'resourceTimeout', 'randomWaitBetweenRequests', 'pageLoadTimeout', 'pageFunctionTimeout'].forEach((key) => {
         input[key] = input[key] * 1000;
         log.info( key + ": " + input[key]);
     });
