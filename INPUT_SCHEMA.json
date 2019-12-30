@@ -175,9 +175,9 @@
             "nullable": true,
             "editor": "hidden",
             "description": "This field has been deprecated and its value is ignored. To set the execution timeout, use the actor run timeout option instead.",
-            "minimum": 1,
-            "maximum": 3600,
-            "default": 3600,
+            "minimum": 300,
+            "maximum": 3000,
+            "default": 3000,
             "unit": "seconds"
         },
         "resourceTimeout": {
