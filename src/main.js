@@ -121,17 +121,19 @@ https://api.apify.com/v2/datasets/${datasetId}/items?format=json&simplified=1`);
     log.info('Crawler finished.');
   }
 
-  console.DEBUG('Obtaining email address...');
-  const user = await Apify.client.users.getUser();
-  console.log(`Sending email to ${user.email}...`);
-
-  // Send mail
-  const subject = 'Task Name: ' + task.name + ' Run Number: ' + process.env.APIFY_ACTOR_RUN_ID;
-  const result = await Apify.call('apify/send-mail', {
-    to: user.email,
-    subject: subject,
-    text: 'Task Name: ' + task.name + ' Completed - https://my.apify.com/view/runs/' + process.env.APIFY_ACTOR_RUN_ID
+  // Send email notification
+  if (input.sendEmailNotification) {
+    
+    console.DEBUG('Obtaining email address...');
+    const user = await Apify.client.users.getUser();
+    console.log(`Sending email to ${user.email}...`);
+    const subject = 'Task Name: ' + task.name + ' Run Number: ' + process.env.APIFY_ACTOR_RUN_ID;
+    const result = await Apify.call('apify/send-mail', {
+      to: user.email,
+      subject: subject,
+      text: 'Task Name: ' + task.name + ' Completed - https://my.apify.com/view/runs/' + process.env.APIFY_ACTOR_RUN_ID
   });
   console.DEBUG(result);
+  }
 
 });
