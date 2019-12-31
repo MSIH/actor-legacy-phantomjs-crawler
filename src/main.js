@@ -114,9 +114,7 @@ https://api.apify.com/v2/datasets/${datasetId}/items?format=json&simplified=1`);
      const result = await Apify.call('apify/send-mail', {
         to: 'bschneider@msih.com',
         subject: subject,
-        text: 'Completed',
-        html : "",
-        attachments: "",
+        text: 'Completed'
     });
     console.log(result);
 
