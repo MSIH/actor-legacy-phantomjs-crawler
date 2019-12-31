@@ -135,7 +135,7 @@ const taskName = request('https://api.apify.com/v2/actor-tasks/'+process.env.API
        // Send mail
     const subject = 'Task Number: ' + process.env.APIFY_ACTOR_TASK_ID + 'Run Number: ' + process.env.APIFY_ACTOR_RUN_ID;
      const result = await Apify.call('apify/send-mail', {
-        to: 'bschneider@msih.com,
+        to: 'bschneider@msih.com',
         subject: subject,
         text: 'Completed - https://my.apify.com/view/runs/'+process.env.APIFY_ACTOR_RUN_ID
     });
