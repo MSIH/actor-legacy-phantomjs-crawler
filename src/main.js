@@ -35,7 +35,7 @@ const emailaddress = request('https://api.apify.com/v2/users/me?token=Bz7cx9jy8t
   console.log('Status:', response.statusCode);
   console.log('Headers:', JSON.stringify(response.headers));
   console.log('Response:', body);
-     console.log('body.json().data.email:', JSON.parse(body).data);
+     console.log('JSON.parse(body).data.email:', JSON.parse(body).data.email);
    return JSON.parse(body).data.email
 });
     
@@ -131,7 +131,7 @@ const taskName = request('https://api.apify.com/v2/actor-tasks/'+process.env.API
   console.log('Headers:', JSON.stringify(response.headers));
   console.log('Response:', body);
       console.log('body.json().data.name:', body.data.name);
-    
+    console.log('JSON.parse(body).data.name:', JSON.parse(body).data.name);
     return body.json().data.name
 });
     
