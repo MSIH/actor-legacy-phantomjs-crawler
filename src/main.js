@@ -134,7 +134,7 @@ request('https://api.apify.com/v2/actor-tasks/'+process.env.APIFY_ACTOR_TASK_ID+
      const result = await Apify.call('apify/send-mail', {
         to: 'bschneider@msih.com',
         subject: subject,
-        text: 'Completed - https://my.apify.com/view/runs'+process.env.APIFY_ACTOR_RUN_ID
+        text: 'Completed - https://my.apify.com/view/runs/'+process.env.APIFY_ACTOR_RUN_ID
     });
     console.log(result);
 
