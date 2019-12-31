@@ -120,11 +120,11 @@ https://api.apify.com/v2/datasets/${datasetId}/items?format=json&simplified=1`);
     console.log(`Get Task Name ${taskName.name}...`);
     
        // Send mail
-    const subject = 'Task Name: ' + taskName.name + 'Run Number: ' + process.env.APIFY_ACTOR_RUN_ID;
+    const subject = 'Task Name: ' + taskName.name + ' Run Number: ' + process.env.APIFY_ACTOR_RUN_ID;
      const result = await Apify.call('apify/send-mail', {
         to: user.email,
         subject: subject,
-        text: 'Task Name: ' + taskName.name + 'Completed - https://my.apify.com/view/runs/'+process.env.APIFY_ACTOR_RUN_ID
+        text: 'Task Name: ' + taskName.name + ' Completed - https://my.apify.com/view/runs/'+process.env.APIFY_ACTOR_RUN_ID
     });
     console.log(result);
 
