@@ -8,7 +8,8 @@ const { log } = Apify.utils;
 Apify.main(async () => {
   const input = await Apify.getInput();
   if (!input) throw new Error('The input was not provided');
-
+    
+  log.info("input.verboseLog: " + input.verboseLog);
   if (input.verboseLog) {
     log.setLevel(log.LEVELS.DEBUG);
   }
