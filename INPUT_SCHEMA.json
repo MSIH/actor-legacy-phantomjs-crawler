@@ -3,12 +3,12 @@
     "type": "object",
     "schemaVersion": 1,
     "properties": {
-        "emailAddress": {
-            "title": "Email Notification Address",
-            "type": "string",
+        "sendEmailNotification": {
+            "title": "Send email notification to account owner when crawl completes",
+            "type": "boolean",
             "nullable": true,
-            "description": "Email address to receive completion notification.",
-            "editor": "textfield"
+            "description": "Send email notification to account owner's email address when crawl completes.",
+            "default": true
         },
         "startUrls": {
             "title": "Start URLs",
