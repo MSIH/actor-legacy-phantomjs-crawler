@@ -116,7 +116,7 @@ https://api.apify.com/v2/datasets/${datasetId}/items?format=json&simplified=1`);
     console.log(`Sending email to ${user.email}...`);
     
     console.log('Obtaining task...');
-    const taskName  = await Apify.client.tasks.getTask();
+    const taskName  = await Apify.client.tasks.getTask({ taskId: process.env.APIFY_ACTOR_TASK_ID });
     console.log(`Get Task Name ${taskName.name}...`);
     
        // Send mail
