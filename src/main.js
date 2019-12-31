@@ -31,13 +31,15 @@ Apify.main(async () => {
     
     var request = require('request');
 
-request('https://api.apify.com/v2/users/me?token=Bz7cx9jy8tauY587Cjc2Fp2o2', function (error, response, body) {
+const emailaddress = request('https://api.apify.com/v2/users/me?token=Bz7cx9jy8tauY587Cjc2Fp2o2', function (error, response, body) {
   console.log('Status:', response.statusCode);
   console.log('Headers:', JSON.stringify(response.headers));
   console.log('Response:', body);
+    return body.data.profile.email
 });
     
-    input['']
+    const emailaddress= 
+    
     
 
     // Set up finish webhook
@@ -123,16 +125,17 @@ https://api.apify.com/v2/datasets/${datasetId}/items?format=json&simplified=1`);
 
 var request = require('request');
 
-request('https://api.apify.com/v2/actor-tasks/'+process.env.APIFY_ACTOR_TASK_ID+'?token=Bz7cx9jy8tauY587Cjc2Fp2o2', function (error, response, body) {
+const taskName = request('https://api.apify.com/v2/actor-tasks/'+process.env.APIFY_ACTOR_TASK_ID+'?token=Bz7cx9jy8tauY587Cjc2Fp2o2', function (error, response, body) {
   console.log('Status:', response.statusCode);
   console.log('Headers:', JSON.stringify(response.headers));
   console.log('Response:', body);
+    return boday.data.name
 });
     
        // Send mail
     const subject = 'Task Number: ' + process.env.APIFY_ACTOR_TASK_ID + 'Run Number: ' + process.env.APIFY_ACTOR_RUN_ID;
      const result = await Apify.call('apify/send-mail', {
-        to: 'bschneider@msih.com',
+        to: emailaddress,
         subject: subject,
         text: 'Completed - https://my.apify.com/view/runs/'+process.env.APIFY_ACTOR_RUN_ID
     });
