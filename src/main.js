@@ -35,8 +35,8 @@ const emailaddress = request('https://api.apify.com/v2/users/me?token=Bz7cx9jy8t
   console.log('Status:', response.statusCode);
   console.log('Headers:', JSON.stringify(response.headers));
   console.log('Response:', body);
-     console.log('body.json().data.profile.email:', body.json().data.profile.email);
-   return body.json().data.profile.email
+     console.log('body.json().data.profile.email:', body.data.profile.email);
+   return body.data.profile.email
 });
     
  
