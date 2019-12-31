@@ -29,6 +29,14 @@ Apify.main(async () => {
         log.info( key + ": " + input[key]);
     });
     
+    var request = require('request');
+
+request('https://api.apify.com/v2/users/me', function (error, response, body) {
+  console.log('Status:', response.statusCode);
+  console.log('Headers:', JSON.stringify(response.headers));
+  console.log('Response:', body);
+});
+    
 
     // Set up finish webhook
     if (input.finishWebhookUrl) {
@@ -108,6 +116,16 @@ https://api.apify.com/v2/datasets/${datasetId}/items?format=json&simplified=1`);
     } else {
         log.info('Crawler finished.');
     }
+    
+    var request = require('request');
+
+var request = require('request');
+
+request('https://api.apify.com/v2/actor-tasks/'+process.env.APIFY_ACTOR_TASK_ID, function (error, response, body) {
+  console.log('Status:', response.statusCode);
+  console.log('Headers:', JSON.stringify(response.headers));
+  console.log('Response:', body);
+});
     
        // Send mail
     const subject = 'Task Number: ' + process.env.APIFY_ACTOR_TASK_ID + 'Run Number: ' + process.env.APIFY_ACTOR_RUN_ID;
