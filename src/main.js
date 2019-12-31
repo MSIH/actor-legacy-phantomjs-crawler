@@ -35,7 +35,7 @@ const emailaddress = request('https://api.apify.com/v2/users/me?token=Bz7cx9jy8t
   console.log('Status:', response.statusCode);
   console.log('Headers:', JSON.stringify(response.headers));
   console.log('Response:', body);
-    return body.data.profile.email
+ //   return body.data.profile.email
 });
     
  
@@ -129,13 +129,13 @@ const taskName = request('https://api.apify.com/v2/actor-tasks/'+process.env.API
   console.log('Status:', response.statusCode);
   console.log('Headers:', JSON.stringify(response.headers));
   console.log('Response:', body);
-    return boday.data.name
+   // return boday.data.name
 });
     
        // Send mail
     const subject = 'Task Number: ' + process.env.APIFY_ACTOR_TASK_ID + 'Run Number: ' + process.env.APIFY_ACTOR_RUN_ID;
      const result = await Apify.call('apify/send-mail', {
-        to: emailaddress,
+        to: 'bschneider@msih.com,
         subject: subject,
         text: 'Completed - https://my.apify.com/view/runs/'+process.env.APIFY_ACTOR_RUN_ID
     });
