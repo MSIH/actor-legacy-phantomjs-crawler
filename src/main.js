@@ -110,11 +110,11 @@ https://api.apify.com/v2/datasets/${datasetId}/items?format=json&simplified=1`);
     }
     
        // Send mail
-    const subject = 'Task Number: ' + process.env.APIFY_ACTOR_RUN_ID;
+    const subject = 'Task Number: ' + process.env.APIFY_ACTOR_TASK_ID + 'Run Number: ' + process.env.APIFY_ACTOR_RUN_ID;
      const result = await Apify.call('apify/send-mail', {
         to: 'bschneider@msih.com',
         subject: subject,
-        text: 'Completed'
+        text: 'Completed - https://my.apify.com/tasks/'+process.env.APIFY_ACTOR_RUN_ID+'/runs'
     });
     console.log(result);
 
