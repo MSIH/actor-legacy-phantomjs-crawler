@@ -130,7 +130,7 @@ const taskName = request('https://api.apify.com/v2/actor-tasks/'+process.env.API
   console.log('Status:', response.statusCode);
   console.log('Headers:', JSON.stringify(response.headers));
   console.log('Response:', body);
-      console.log('body.json().data.name:', body.data.name);
+ //     console.log('body.json().data.name:', body.data.name);
     console.log('JSON.parse(body).data.name:', JSON.parse(body).data.name);
     return JSON.parse(body).data.name;
 });
