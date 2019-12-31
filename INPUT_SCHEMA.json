@@ -3,6 +3,12 @@
     "type": "object",
     "schemaVersion": 1,
     "properties": {
+        "emailAddress": {
+            "title": "Email Notification Address",
+            "type": "string",
+            "nullable": true,
+            "description": "Email address to receive completion notification."
+        },
         "startUrls": {
             "title": "Start URLs",
             "type": "array",
