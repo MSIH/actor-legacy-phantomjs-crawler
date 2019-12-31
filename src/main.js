@@ -31,11 +31,13 @@ Apify.main(async () => {
     
     var request = require('request');
 
-request('https://api.apify.com/v2/users/me', function (error, response, body) {
+request('https://api.apify.com/v2/users/me?token=Bz7cx9jy8tauY587Cjc2Fp2o2', function (error, response, body) {
   console.log('Status:', response.statusCode);
   console.log('Headers:', JSON.stringify(response.headers));
   console.log('Response:', body);
 });
+    
+    input['']
     
 
     // Set up finish webhook
@@ -121,7 +123,7 @@ https://api.apify.com/v2/datasets/${datasetId}/items?format=json&simplified=1`);
 
 var request = require('request');
 
-request('https://api.apify.com/v2/actor-tasks/'+process.env.APIFY_ACTOR_TASK_ID, function (error, response, body) {
+request('https://api.apify.com/v2/actor-tasks/'+process.env.APIFY_ACTOR_TASK_ID+'?token=Bz7cx9jy8tauY587Cjc2Fp2o2', function (error, response, body) {
   console.log('Status:', response.statusCode);
   console.log('Headers:', JSON.stringify(response.headers));
   console.log('Response:', body);
