@@ -100,7 +100,10 @@ Apify.main(async () => {
   today.toISOString().substring(0, 10);
     
   const runID = (process.env.APIFY_ACTOR_RUN_ID || null);
-  const datasetName = task.name + "---" + today+ "---" runID;
+  const searchTerm = input.customData.searchTerm || runID;
+    
+  const datasetName = task.name + "---" + today+ "---" searchTerm;
+    
   log.info("INFO: Create Database: " + datasetName);
   const namedDataset = await Apify.openDataset(datasetName);
 
