@@ -26,7 +26,7 @@ Apify.main(async () => {
   // to make UI more human readable, inputSchema was changed to seconds
   ['resourceTimeout', 'randomWaitBetweenRequests', 'pageLoadTimeout', 'pageFunctionTimeout'].forEach((key) => {
     input[key] = input[key] * 1000;
-    log.DEBUG(key + ": " + input[key]);
+    log.debug(key + ": " + input[key]);
   });
 
   // Set up finish webhook
@@ -53,7 +53,7 @@ Apify.main(async () => {
         "data": ${JSON.stringify(input.finishWebhookData || null)}
       }`,
     });
-    log.DEBUG('Added finish webhook', {
+    log.debug('Added finish webhook', {
       webhook: _.pick(webhook, 'id', 'idempotencyKey', 'requestUrl')
     });
   }
@@ -89,11 +89,11 @@ Apify.main(async () => {
   };
 
   // create named dataset with Actor Run ID
-  console.DEBUG('Obtaining task...');
+  console.debug('Obtaining task...');
   const task = await Apify.client.tasks.getTask({
     taskId: process.env.APIFY_ACTOR_TASK_ID
   });
-  console.DEBUG(`Task Name ${task.name}...`);
+  console.debug(`Task Name ${task.name}...`);
     
   const runID = (process.env.APIFY_ACTOR_RUN_ID || null);
   const datasetName = task.name + "-" + runID;
@@ -124,16 +124,16 @@ https://api.apify.com/v2/datasets/${datasetId}/items?format=json&simplified=1`);
   // Send email notification
   if (input.sendEmailNotification) {
     
-    console.DEBUG('Obtaining email address...');
+    console.debug('Obtaining email address...');
     const user = await Apify.client.users.getUser();
-    console.log(`Sending email to ${user.email}...`);
+    console.log(`Sending notification to ${user.email}...`);
     const subject = 'Task Name: ' + task.name + ' Run Number: ' + process.env.APIFY_ACTOR_RUN_ID;
     const result = await Apify.call('apify/send-mail', {
       to: user.email,
       subject: subject,
       text: 'Task Name: ' + task.name + ' Completed - https://my.apify.com/view/runs/' + process.env.APIFY_ACTOR_RUN_ID
   });
-  console.DEBUG(result);
+  console.debug(result);
   }
 
 });
