@@ -101,8 +101,7 @@ Apify.main(async () => {
     
   const runID = (process.env.APIFY_ACTOR_RUN_ID || null);
   const searchTerm = input.customData.searchTerm || runID;
-    log.info("INFO: input.customData.searchTerm: " + input.customData.searchTerm);
-    log.info("INFO: searchTerm: " + searchTerm);
+  log.info("INFO: searchTerm: " + searchTerm);
   const datasetName = task.name + "---" + today+ "---" + searchTerm;
     
   log.info("INFO: Create Database: " + datasetName);
