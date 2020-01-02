@@ -100,7 +100,8 @@ Apify.main(async () => {
   today = today.toISOString().substring(0, 10);
     
   const runID = (process.env.APIFY_ACTOR_RUN_ID || null);
-  const searchTerm = input.customData.searchTerm || runID;
+    //input.customData.searchTerm ||
+  const searchTerm =  runID;
   log.info("INFO: searchTerm: " + searchTerm);
   const datasetName = task.name + "---" + today+ "---" + searchTerm;
     
