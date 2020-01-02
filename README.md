@@ -1,12 +1,12 @@
 # MSIH PhantomJS Crawler for Apify
 
-- crawls 6 to 10 times more pages than puppeteer
+- crawls 6 to 10 times more pages than puppeteer per Compute Unit
 - send email when crawl is complete
 - improved input screen
 
-It uses the [PhantomJS](http://phantomjs.org/) headless browser to recursively
+This uses the [PhantomJS](http://phantomjs.org/) headless browser to recursively
 crawl websites and extract data from them using front-end JavaScript code. PhantomJS is no longer being developed by the community
-and might be detected and blocked by target websites. This crawler is based on the Apify Legacy PhantomJS Crawler.
+and might be detected and blocked by websites. This crawler is based on the Apify Legacy PhantomJS Crawler.
 
 ## Overview
 
