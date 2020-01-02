@@ -24,7 +24,7 @@
             "prefill": [
                 {
                     "key": "START",
-                    "value": "https://www.example.com/"
+                    "value": "https://apify.com/"
                 }
             ]
         },
