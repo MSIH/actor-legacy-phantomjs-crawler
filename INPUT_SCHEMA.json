@@ -93,6 +93,19 @@
             "prefill": "function interceptRequest(context, newRequest) {\n    // called whenever the crawler finds a link to a new page,\n    // use it to override default behavior\n    return newRequest;\n}\n",
             "editor": "javascript"
         },
+        "customData": {
+            "title": "Custom data",
+            "type": [
+                "object",
+                "string",
+                "integer",
+                "boolean",
+                "array"
+            ],
+            "nullable": true,
+            "description": "A custom JSON object that is passed to <b>Page function</b> and intercept request function as <code>context.customData</code>. This setting is mainly useful if you're invoking the crawler using the API, so that you can pass some arbitrary parameters to your code.",
+            "editor": "json"
+        },
         "verboseLog": {
             "title": "Verbose log",
             "type": "boolean",
@@ -294,19 +307,6 @@
             "nullable": true,
             "description": "Specifies Apify Proxy groups to be used when <b>proxyType</b> is <code>CUSTOM</code>. Each proxy should be specified in the <code>scheme://user:password@host:port</code> format, multiple proxies should be separated by a space or new line. <br><br>This is a legacy option only kept for backwards compatibility - use <b>proxyConfiguration</b> instead!",
             "editor": "hidden"
-        },
-        "customData": {
-            "title": "Custom data",
-            "type": [
-                "object",
-                "string",
-                "integer",
-                "boolean",
-                "array"
-            ],
-            "nullable": true,
-            "description": "A custom JSON object that is passed to <b>Page function</b> and intercept request function as <code>context.customData</code>. This setting is mainly useful if you're invoking the crawler using the API, so that you can pass some arbitrary parameters to your code.",
-            "editor": "json"
         },
         "finishWebhookUrl": {
             "title": "Finish webhook URL",
