@@ -147,7 +147,7 @@ https://api.apify.com/v2/datasets/${datasetId}/items?format=json&simplified=1`);
     if (input.sendEmailNotification) {
         
         
-    const result = await Apify.call('apify/Task-Notification', {Apify.getEnv()});
+    const result = await Apify.call('apify/Task-Notification', Apify.getEnv());
 
 
         log.debug('Obtaining email address...');
