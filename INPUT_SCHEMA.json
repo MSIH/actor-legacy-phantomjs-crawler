@@ -111,7 +111,7 @@
             "type": "string",
             "nullable": true,
             "maxLength": 50,
-            "pattern": "/^[a-z0-9]+$/i",
+            "pattern": "^[a-z0-9]+$",
             "description": "Name to use for Dataset. no spaces or special characters",
             "editor": "textfield"
         },
