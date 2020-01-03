@@ -18,8 +18,7 @@ Apify.main(async () => {
         log.setLevel(log.LEVELS.DEBUG);
     }
 
-    log.info("INFO: log.getLevel(): " + log.getLevel());
-    // log.info("process.env.APIFY_LOG_LEVEL: " + process.env.APIFY_LOG_LEVEL);
+    log.debug("INFO: log.getLevel(): " + log.getLevel());
 
     // WORKAROUND: The legacy Apify Crawler product used to enforce default values for the following fields,
     // even if the user passed null value via API. Since passing null value for actors doesn't enforce
