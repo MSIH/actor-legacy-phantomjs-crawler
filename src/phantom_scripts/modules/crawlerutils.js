@@ -10,8 +10,8 @@
 "use strict";
 
 require('./polyfills');
-const Apify = require('apify');
 
+var Apify = require('apify');
 var fs = require('fs');
 var utils = require('./utils');
 var pseudoUrl = require('./pseudourl');
