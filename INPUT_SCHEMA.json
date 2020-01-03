@@ -21,12 +21,10 @@
             "minItems": 1,
             "patternKey": "^.{0,100}$",
             "patternValue": "^([hH][tT][tT][pP]:\\/\\/|[hH][tT][tT][pP][sS]:\\/\\/)",
-            "prefill": [
-                {
-                    "key": "START",
-                    "value": "https://apify.com/"
-                }
-            ]
+            "prefill": [{
+                "key": "START",
+                "value": "https://apify.com/"
+            }]
         },
         "crawlPurls": {
             "title": "Pseudo-URLs",
@@ -38,12 +36,10 @@
             "placeholderValue": "Pseudo-URL",
             "patternKey": "^.{0,100}$",
             "patternValue": "^([hH][tT][tT][pP]:\\/\\/|[hH][tT][tT][pP][sS]:\\/\\/)",
-            "prefill": [
-                {
-                    "key": "MY_LABEL",
-                    "value": "https://www.example.com/[.*]"
-                }
-            ]
+            "prefill": [{
+                "key": "MY_LABEL",
+                "value": "https://www.example.com/[.*]"
+            }]
         },
         "clickableElementsSelector": {
             "title": "Clickable elements",
@@ -59,8 +55,12 @@
             "nullable": false,
             "description": "Specifies the type of proxy servers that will be used by the crawler in order to hide its origin.",
             "editor": "proxy",
-            "prefill": {"useApifyProxy": true},
-            "default": {"useApifyProxy": true}
+            "prefill": {
+                "useApifyProxy": true
+            },
+            "default": {
+                "useApifyProxy": true
+            }
 
         },
         "injectJQuery": {
@@ -105,6 +105,15 @@
             "nullable": true,
             "description": "A custom JSON object that is passed to <b>Page function</b> and intercept request function as <code>context.customData</code>. This setting is mainly useful if you're invoking the crawler using the API, so that you can pass some arbitrary parameters to your code.",
             "editor": "json"
+        },
+        "datasetName": {
+            "title": "Name of Dataset",
+            "type": "string",
+            "nullable": true,
+            "maxLength": 50,
+            "pattern": "/^[a-z0-9]+$/i",
+            "description": "Name to use for Dataset. no spaces or special characters",
+            "editor": "textfield"
         },
         "verboseLog": {
             "title": "Verbose log",
