@@ -111,10 +111,15 @@ Apify.main(async () => {
     console.debug(`CompletionStatus ${run.status}...`);
 
 
-    const runID = (process.env.APIFY_ACTOR_RUN_ID || "");
-    const inputDatabaseName = input.datasetName + "---" + runID || runID
-    //  log.info("INFO: Create Database: " + input.datasetName);
-    const datasetName = task.name + "---" + inputDatabaseName;
+    const runID = process.env.APIFY_ACTOR_RUN_ID || "";
+
+    if (input.datasetName) {
+        datasetTitle = input.datasetName + "---" + runID;
+    } else {
+        datasetTitle = "---" + runID;
+    }
+
+    const datasetName = task.name + "---" + datasetTitle;
 
     log.info("INFO: Create Database: " + datasetName);
     const namedDataset = await Apify.openDataset(datasetName);
