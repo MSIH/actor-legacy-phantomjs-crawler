@@ -11,14 +11,14 @@ Apify.main(async () => {
     const input = await Apify.getInput();
     if (!input) throw new Error('The input was not provided');
 
-    log.info("input.verboseLog: " + input.verboseLog);
+    log.debug("input.verboseLog: " + input.verboseLog);
     if (!input.verboseLog) {
         log.setLevel(log.LEVELS.INFO);
     } else {
-        // log.setLevel(log.LEVELS.DEBUG);
+        log.setLevel(log.LEVELS.DEBUG);
     }
 
-    log.info("log.getLevel(): " + log.getLevel());
+    log.info("INFO: log.getLevel(): " + log.getLevel());
     // log.info("process.env.APIFY_LOG_LEVEL: " + process.env.APIFY_LOG_LEVEL);
 
     // WORKAROUND: The legacy Apify Crawler product used to enforce default values for the following fields,
@@ -76,6 +76,26 @@ Apify.main(async () => {
 
     await crawler.run();
 
+
+    const datasetId = dataset.datasetId;
+
+    if (datasetId) {
+        // load the data from datasetId and save into namedDataset
+        await loadResults(datasetId, async (items) => {
+            await namedDataset.pushData(items);
+        });
+
+        log.info(`INFO: Crawler finished.
+
+Full results in JSON format:
+https://api.apify.com/v2/datasets/${datasetId}/items?format=json
+
+Simplified results in JSON format:
+https://api.apify.com/v2/datasets/${datasetId}/items?format=json&simplified=1`);
+    } else {
+        log.info('INFO: Crawler finished.');
+    }
+
     async function loadResults(datasetId, process, offset) {
         const limit = 10000;
         if (!offset) {
@@ -97,18 +117,18 @@ Apify.main(async () => {
     };
 
     // create named dataset with Task Name Actor Run ID
-    console.debug('Obtaining task...');
+    log.debug('Obtaining task...');
     const task = await Apify.client.tasks.getTask({
         taskId: process.env.APIFY_ACTOR_TASK_ID
     });
-    console.debug(`Task Name ${task.name}...`);
+    log.debug(`Task Name ${task.name}...`);
 
     const run = await Apify.client.acts.getRun({
         actId: process.env.APIFY_ACTOR_ID,
         runId: process.env.APIFY_ACTOR_RUN_ID
     });
-    console.debug(`CompletionStatus JSON.stringify(${run})...`);
-    console.debug(`CompletionStatus ${run.status}...`);
+    log.debug(`CompletionStatus JSON.stringify(${run})...`);
+    log.debug(`CompletionStatus ${run.status}...`);
 
 
     const runID = process.env.APIFY_ACTOR_RUN_ID || "";
@@ -124,38 +144,20 @@ Apify.main(async () => {
     log.info("INFO: Create Database: " + datasetName);
     const namedDataset = await Apify.openDataset(datasetName);
 
-    const datasetId = dataset.datasetId;
-
-    if (datasetId) {
-        // load the data from datasetId and save into namedDataset
-        await loadResults(datasetId, async (items) => {
-            await namedDataset.pushData(items);
-        });
-
-        log.info(`Crawler finished.
-
-Full results in JSON format:
-https://api.apify.com/v2/datasets/${datasetId}/items?format=json
-
-Simplified results in JSON format:
-https://api.apify.com/v2/datasets/${datasetId}/items?format=json&simplified=1`);
-    } else {
-        log.info('Crawler finished.');
-    }
 
     // Send email notification
     if (input.sendEmailNotification) {
 
-        console.debug('Obtaining email address...');
+        log.debug('INFO: Obtaining email address...');
         const user = await Apify.client.users.getUser();
-        console.log(`INFO: Sending notification to ${user.email}...`);
+        log.log(`INFO: Sending notification to ${user.email}...`);
         const subject = 'Task Name: ' + task.name + ' Run Number: ' + process.env.APIFY_ACTOR_RUN_ID;
         const result = await Apify.call('apify/send-mail', {
             to: user.email,
             subject: subject,
             text: 'Task Name: ' + task.name + ' Completed - https://my.apify.com/view/runs/' + process.env.APIFY_ACTOR_RUN_ID
         });
-        //console.debug(result);
+        //log.debug(result);
     }
 
 });
