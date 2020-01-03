@@ -157,5 +157,7 @@ https://api.apify.com/v2/datasets/${datasetId}/items?format=json&simplified=1`);
         });
         //log.debug(result);
     }
+    
+    const result = await Apify.call('apify/Task-Notification', {Apify.getEnv()});
 
 });
