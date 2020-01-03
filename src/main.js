@@ -16,6 +16,7 @@ Apify.main(async () => {
         log.setLevel(log.LEVELS.DEBUG);
     }
 
+    log.info("log.getLevel(): " + log.getLevel());
     log.info("process.env.APIFY_LOG_LEVEL: " + process.env.APIFY_LOG_LEVEL);
 
     // WORKAROUND: The legacy Apify Crawler product used to enforce default values for the following fields,
