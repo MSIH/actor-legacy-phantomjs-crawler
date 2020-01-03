@@ -98,6 +98,13 @@ Apify.main(async () => {
     });
     console.debug(`Task Name ${task.name}...`);
 
+    const run = await Apify.client.acts.getRun({
+        actId: process.env.APIFY_ACTOR_TASK_ID,
+        runId: process.env.APIFY_ACTOR_RUN_ID
+    });
+    console.debug(`CompletionStatus ${run.status}...`);
+
+
     const runID = (process.env.APIFY_ACTOR_RUN_ID || "");
     const datasetName = task.name + "---" + runID;
 
