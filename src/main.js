@@ -17,7 +17,7 @@ Apify.main(async () => {
     }
 
     log.info("log.getLevel(): " + log.getLevel());
-    log.info("process.env.APIFY_LOG_LEVEL: " + process.env.APIFY_LOG_LEVEL);
+    // log.info("process.env.APIFY_LOG_LEVEL: " + process.env.APIFY_LOG_LEVEL);
 
     // WORKAROUND: The legacy Apify Crawler product used to enforce default values for the following fields,
     // even if the user passed null value via API. Since passing null value for actors doesn't enforce
@@ -102,10 +102,10 @@ Apify.main(async () => {
     console.debug(`Task Name ${task.name}...`);
 
     const run = await Apify.client.acts.getRun({
-        actId: process.env.APIFY_ACTOR_TASK_ID,
+        actId: process.env.APIFY_ACTOR_ID,
         runId: process.env.APIFY_ACTOR_RUN_ID
     });
-    console.debug(`CompletionStatus ${run.status}...`);
+    console.debug(`CompletionStatus ${run}...`);
 
 
     const runID = (process.env.APIFY_ACTOR_RUN_ID || "");
