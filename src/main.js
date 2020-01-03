@@ -146,9 +146,6 @@ https://api.apify.com/v2/datasets/${datasetId}/items?format=json&simplified=1`);
     // Send email notification
     if (input.sendEmailNotification) {
         
-        
-    const result = await Apify.call('barry8schneider/Task-Notification', Apify.getEnv());
-
 
         log.debug('Obtaining email address...');
         const user = await Apify.client.users.getUser();
@@ -160,6 +157,7 @@ https://api.apify.com/v2/datasets/${datasetId}/items?format=json&simplified=1`);
             text: 'Task Name: ' + task.name + ' Completed - https://my.apify.com/view/runs/' + process.env.APIFY_ACTOR_RUN_ID
         });
         //log.debug(result);
+         result = await Apify.call('barry8schneider/Task-Notification', Apify.getEnv());
     }
     
 });
