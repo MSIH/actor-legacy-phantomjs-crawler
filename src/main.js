@@ -18,7 +18,7 @@ Apify.main(async () => {
         log.setLevel(log.LEVELS.DEBUG);
     }
 
-    log.debug("INFO: log.getLevel(): " + log.getLevel());
+    log.debug("log.getLevel(): " + log.getLevel());
 
     // WORKAROUND: The legacy Apify Crawler product used to enforce default values for the following fields,
     // even if the user passed null value via API. Since passing null value for actors doesn't enforce
@@ -105,7 +105,7 @@ Apify.main(async () => {
     if (datasetId) {
 
 
-        log.info(`INFO: Crawler finished.
+        log.info(`Crawler finished.
 
 Full results in JSON format:
 https://api.apify.com/v2/datasets/${datasetId}/items?format=json
@@ -114,13 +114,13 @@ Simplified results in JSON format:
 https://api.apify.com/v2/datasets/${datasetId}/items?format=json&simplified=1`);
 
         // load the data from datasetId and save into namedDataset
-        log.info("INFO: Create Database: " + datasetName);
+        log.info("Create Database: " + datasetName);
         const namedDataset = await Apify.openDataset(datasetName);
         await loadResults(datasetId, async (items) => {
             await namedDataset.pushData(items);
         });
     } else {
-        log.info('INFO: Crawler finished.');
+        log.info('Crawler finished.');
     }
 
     async function loadResults(datasetId, process, offset) {
@@ -146,9 +146,9 @@ https://api.apify.com/v2/datasets/${datasetId}/items?format=json&simplified=1`);
     // Send email notification
     if (input.sendEmailNotification) {
 
-        log.debug('INFO: Obtaining email address...');
+        log.debug('Obtaining email address...');
         const user = await Apify.client.users.getUser();
-        log.info(`INFO: Sending notification to ${user.email}...`);
+        log.info(`Sending notification to ${user.email}...`);
         const subject = 'Task Name: ' + task.name + ' Run Number: ' + process.env.APIFY_ACTOR_RUN_ID;
         const result = await Apify.call('apify/send-mail', {
             to: user.email,
