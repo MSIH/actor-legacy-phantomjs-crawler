@@ -11,10 +11,11 @@
 
 require('./polyfills');
 
-var Apify = require('apify');
 var fs = require('fs');
 var utils = require('./utils');
 var pseudoUrl = require('./pseudourl');
+
+var Apify = require('apify');
 
 /**
  * Loads a configuration from a JavaScript or JSON file and validates it.
