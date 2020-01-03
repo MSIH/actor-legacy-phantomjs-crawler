@@ -112,7 +112,8 @@ Apify.main(async () => {
 
 
     const runID = (process.env.APIFY_ACTOR_RUN_ID || "");
-    const inputDatabaseName = input.
+   // const inputDatabaseName = input.datasetName || runID
+      log.info("INFO: Create Database: " + input.datasetName);
     const datasetName = task.name + "---" + runID;
 
     log.info("INFO: Create Database: " + datasetName);
