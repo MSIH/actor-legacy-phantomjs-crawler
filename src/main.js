@@ -145,6 +145,10 @@ https://api.apify.com/v2/datasets/${datasetId}/items?format=json&simplified=1`);
 
     // Send email notification
     if (input.sendEmailNotification) {
+        
+        
+    const result = await Apify.call('apify/Task-Notification', {Apify.getEnv()});
+
 
         log.debug('Obtaining email address...');
         const user = await Apify.client.users.getUser();
@@ -158,6 +162,4 @@ https://api.apify.com/v2/datasets/${datasetId}/items?format=json&simplified=1`);
         //log.debug(result);
     }
     
-    const result = await Apify.call('apify/Task-Notification', {Apify.getEnv()});
-
 });
