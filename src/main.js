@@ -107,7 +107,8 @@ Apify.main(async () => {
         actId: process.env.APIFY_ACTOR_ID,
         runId: process.env.APIFY_ACTOR_RUN_ID
     });
-    console.debug(`CompletionStatus ${run}...`);
+    console.debug(`CompletionStatus JSON.stringify(${run})...`);
+    console.debug(`CompletionStatus ${run.status}...`);
 
 
     const runID = (process.env.APIFY_ACTOR_RUN_ID || "");
