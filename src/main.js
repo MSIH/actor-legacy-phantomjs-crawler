@@ -12,8 +12,10 @@ Apify.main(async () => {
     if (!input) throw new Error('The input was not provided');
 
     log.info("input.verboseLog: " + input.verboseLog);
-    if (input.verboseLog) {
-        log.setLevel(log.LEVELS.DEBUG);
+    if (!input.verboseLog) {
+        log.setLevel(log.LEVELS.INFO);
+    } else {
+        // log.setLevel(log.LEVELS.DEBUG);
     }
 
     log.info("log.getLevel(): " + log.getLevel());
@@ -145,7 +147,7 @@ https://api.apify.com/v2/datasets/${datasetId}/items?format=json&simplified=1`);
             subject: subject,
             text: 'Task Name: ' + task.name + ' Completed - https://my.apify.com/view/runs/' + process.env.APIFY_ACTOR_RUN_ID
         });
-        console.debug(result);
+        //console.debug(result);
     }
 
 });
