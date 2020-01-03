@@ -76,46 +76,6 @@ Apify.main(async () => {
 
     await crawler.run();
 
-
-    const datasetId = dataset.datasetId;
-
-    if (datasetId) {
-        // load the data from datasetId and save into namedDataset
-        await loadResults(datasetId, async (items) => {
-            await namedDataset.pushData(items);
-        });
-
-        log.info(`INFO: Crawler finished.
-
-Full results in JSON format:
-https://api.apify.com/v2/datasets/${datasetId}/items?format=json
-
-Simplified results in JSON format:
-https://api.apify.com/v2/datasets/${datasetId}/items?format=json&simplified=1`);
-    } else {
-        log.info('INFO: Crawler finished.');
-    }
-
-    async function loadResults(datasetId, process, offset) {
-        const limit = 10000;
-        if (!offset) {
-            offset = 0;
-        }
-        const newItems = await Apify.client.datasets.getItems({
-            datasetId,
-            offset,
-            limit
-        });
-        if (newItems && (newItems.length || (newItems.items && newItems.items.length))) {
-            if (newItems.length) {
-                await process(newItems);
-            } else if (newItems.items && newItems.items.length) {
-                await process(newItems.items);
-            }
-            await loadResults(datasetId, process, offset + limit);
-        }
-    };
-
     // create named dataset with Task Name Actor Run ID
     log.debug('Obtaining task...');
     const task = await Apify.client.tasks.getTask({
@@ -141,9 +101,51 @@ https://api.apify.com/v2/datasets/${datasetId}/items?format=json&simplified=1`);
 
     const datasetName = task.name + "---" + datasetTitle;
 
-    log.info("INFO: Create Database: " + datasetName);
-    const namedDataset = await Apify.openDataset(datasetName);
 
+
+
+    const datasetId = dataset.datasetId;
+
+    if (datasetId) {
+
+
+        log.info(`INFO: Crawler finished.
+
+Full results in JSON format:
+https://api.apify.com/v2/datasets/${datasetId}/items?format=json
+
+Simplified results in JSON format:
+https://api.apify.com/v2/datasets/${datasetId}/items?format=json&simplified=1`);
+
+        // load the data from datasetId and save into namedDataset
+        log.info("INFO: Create Database: " + datasetName);
+        const namedDataset = await Apify.openDataset(datasetName);
+        await loadResults(datasetId, async (items) => {
+            await namedDataset.pushData(items);
+        });
+    } else {
+        log.info('INFO: Crawler finished.');
+    }
+
+    async function loadResults(datasetId, process, offset) {
+        const limit = 10000;
+        if (!offset) {
+            offset = 0;
+        }
+        const newItems = await Apify.client.datasets.getItems({
+            datasetId,
+            offset,
+            limit
+        });
+        if (newItems && (newItems.length || (newItems.items && newItems.items.length))) {
+            if (newItems.length) {
+                await process(newItems);
+            } else if (newItems.items && newItems.items.length) {
+                await process(newItems.items);
+            }
+            await loadResults(datasetId, process, offset + limit);
+        }
+    };
 
     // Send email notification
     if (input.sendEmailNotification) {
