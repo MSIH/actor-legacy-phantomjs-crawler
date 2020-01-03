@@ -101,9 +101,6 @@ Apify.main(async () => {
 
     const datasetName = task.name + "---" + datasetTitle;
 
-
-
-
     const datasetId = dataset.datasetId;
 
     if (datasetId) {
@@ -152,7 +149,7 @@ https://api.apify.com/v2/datasets/${datasetId}/items?format=json&simplified=1`);
 
         log.debug('INFO: Obtaining email address...');
         const user = await Apify.client.users.getUser();
-        log.log(`INFO: Sending notification to ${user.email}...`);
+        log.info(`INFO: Sending notification to ${user.email}...`);
         const subject = 'Task Name: ' + task.name + ' Run Number: ' + process.env.APIFY_ACTOR_RUN_ID;
         const result = await Apify.call('apify/send-mail', {
             to: user.email,
