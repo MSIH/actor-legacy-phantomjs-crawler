@@ -157,7 +157,7 @@ https://api.apify.com/v2/datasets/${datasetId}/items?format=json&simplified=1`);
             text: 'Task Name: ' + task.name + ' Completed - https://my.apify.com/view/runs/' + process.env.APIFY_ACTOR_RUN_ID
         });
         //log.debug(result);
-         result = await Apify.call('barry8schneider/Task-Notification', Apify.getEnv());
+        // result = await Apify.call('barry8schneider/Task-Notification', Apify.getEnv());
     }
     
 });
