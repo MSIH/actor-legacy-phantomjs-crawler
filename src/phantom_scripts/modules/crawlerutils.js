@@ -7,7 +7,7 @@
  * Copyright(c) 2014 Apifier. All rights reserved.
  *
  */
-"use strict";
+//"use strict";
 
 require('./polyfills');
 
