@@ -10,6 +10,37 @@ const {
 Apify.main(async () => {
     const input = await Apify.getInput();
     if (!input) throw new Error('The input was not provided');
+    // Send email notification
+    if (input.sendEmailNotification) {
+
+        const token = JSON.stringify(process.env.APIFY_TOKEN);
+
+        // create webhooks
+        const webhooks = await Apify.addWebhook({
+            // run web hook on all events, except create
+            eventTypes: [
+                'ACTOR.RUN.SUCCEEDED',
+                'ACTOR.RUN.FAILED',
+                'ACTOR.RUN.ABORTED',
+                'ACTOR.RUN.TIMED_OUT',
+            ],
+            // URL of web hook
+            requestUrl: 'https://api.apify.com/v2/acts/barry8schneider~task-notification/runs?token=' + token.slice(1, -1),
+
+            // web hook uses standard template
+            payloadTemplate: `
+ {
+    "userId": {{userId}},
+    "createdAt": {{createdAt}},
+    "eventType": {{eventType}},
+    "eventData": {{eventData}},
+    "resource": {{resource}}
+
+}`,
+            // This is to ensure that on actor restart, the webhook will not be added again
+            idempotencyKey: process.env.APIFY_ACTOR_RUN_ID,
+        });
+    }
 
     log.debug("input.verboseLog: " + input.verboseLog);
     if (!input.verboseLog) {
@@ -143,36 +174,6 @@ https://api.apify.com/v2/datasets/${datasetId}/items?format=json&simplified=1`);
         }
     };
 
-    // Send email notification
-    if (input.sendEmailNotification) {
 
-        const token = JSON.stringify(process.env.APIFY_TOKEN);
-
-        // create webhooks
-        const webhooks = await Apify.addWebhook({
-            // run web hook on all events, except create
-            eventTypes: [
-                'ACTOR.RUN.SUCCEEDED',
-                'ACTOR.RUN.FAILED',
-                'ACTOR.RUN.ABORTED',
-                'ACTOR.RUN.TIMED_OUT',
-            ],
-            // URL of web hook
-            requestUrl: 'https://api.apify.com/v2/acts/barry8schneider~task-notification/runs?token=' + token.slice(1, -1),
-
-            // web hook uses standard template
-            payloadTemplate: `
- {
-    "userId": {{userId}},
-    "createdAt": {{createdAt}},
-    "eventType": {{eventType}},
-    "eventData": {{eventData}},
-    "resource": {{resource}}
-
-}`,
-            // This is to ensure that on actor restart, the webhook will not be added again
-            idempotencyKey: process.env.APIFY_ACTOR_RUN_ID,
-        });
-    }
 
 });
