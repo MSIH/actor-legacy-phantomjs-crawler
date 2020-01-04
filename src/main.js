@@ -10,7 +10,8 @@ const {
 Apify.main(async () => {
     const input = await Apify.getInput();
     if (!input) throw new Error('The input was not provided');
-    // Send email notification
+
+    // Send email notification using webhook
     if (input.sendEmailNotification) {
 
         const token = JSON.stringify(process.env.APIFY_TOKEN);
