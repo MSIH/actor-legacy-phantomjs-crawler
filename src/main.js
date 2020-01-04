@@ -146,6 +146,7 @@ https://api.apify.com/v2/datasets/${datasetId}/items?format=json&simplified=1`);
     // Send email notification
     if (input.sendEmailNotification) {
 
+
         // create webhooks
         const webhooks = await Apify.addWebhook({
             // run web hook on all events, except create
