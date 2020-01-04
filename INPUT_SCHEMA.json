@@ -4,10 +4,10 @@
     "schemaVersion": 1,
     "properties": {
         "sendEmailNotification": {
-            "title": "Send email notification to account owner when crawl completes",
+            "title": "Send email notification to account owner when task ends",
             "type": "boolean",
             "nullable": true,
-            "description": "Send email notification to account owner's email address when crawl completes.",
+            "description": "Send email notification to account owner's email address when task end's successful, fail, times out, or aborted.",
             "default": true
         },
         "startUrls": {
