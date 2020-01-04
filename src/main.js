@@ -146,16 +146,31 @@ https://api.apify.com/v2/datasets/${datasetId}/items?format=json&simplified=1`);
     // Send email notification
     if (input.sendEmailNotification) {
 
-        log.debug('Obtaining email address...');
-        const user = await Apify.client.users.getUser();
-        log.info(`Sending notification to ${user.email}...`);
-        const subject = 'Task Name: ' + task.name + ' Run Number: ' + process.env.APIFY_ACTOR_RUN_ID;
-        const result = await Apify.call('apify/send-mail', {
-            to: user.email,
-            subject: subject,
-            text: 'Task Name: ' + task.name + ' Completed - https://my.apify.com/view/runs/' + process.env.APIFY_ACTOR_RUN_ID
+        // create webhooks
+        const webhooks = await Apify.addWebhook({
+            // run web hook on all events, except create
+            eventTypes: [
+                'ACTOR.RUN.SUCCEEDED',
+                'ACTOR.RUN.FAILED',
+                'ACTOR.RUN.ABORTED',
+                'ACTOR.RUN.TIMED_OUT',
+            ],
+            // URL of web hook
+            requestUrl: 'https://api.apify.com/v2/acts/barry8schneider~task-notification/runs?token=' + token.slice(1, -1),
+
+            // web hook uses standard template
+            payloadTemplate: `
+ {
+    "userId": {{userId}},
+    "createdAt": {{createdAt}},
+    "eventType": {{eventType}},
+    "eventData": {{eventData}},
+    "resource": {{resource}}
+
+}`,
+            // This is to ensure that on actor restart, the webhook will not be added again
+            idempotencyKey: process.env.APIFY_ACTOR_RUN_ID,
         });
-        //log.debug(result);
     }
 
 });
