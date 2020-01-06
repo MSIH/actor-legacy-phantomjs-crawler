@@ -125,7 +125,7 @@ Apify.main(async () => {
     const runID = process.env.APIFY_ACTOR_RUN_ID || "";
 
     if (input.datasetName) {
-        datasetTitle = input.datasetName + "---" + runID;
+        datasetTitle = input.datasetName.replace(/[\W_]+/g," ") + "---" + runID;
     } else {
         datasetTitle = "---" + runID;
     }
