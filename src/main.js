@@ -99,7 +99,7 @@ Apify.main(async () => {
 
     //add inout into customdata
     
-    input.customData.input = input;
+    input.customData= {input};
     log.info(JSON.stringify(input));
     
     const requestQueue = await Apify.openRequestQueue();
