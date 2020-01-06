@@ -97,7 +97,8 @@ Apify.main(async () => {
         });
     }
 
-    //add inout into customdata
+    //add inout into customdatato
+    input.customData = input;
     var cache = [];
 log.info(JSON.stringify(input, function (key, value) {
     if (typeof value === 'object' && value !== null) {
