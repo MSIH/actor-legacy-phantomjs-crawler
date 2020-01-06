@@ -7,7 +7,7 @@
  * Copyright(c) 2014 Apifier. All rights reserved.
  *
  */
-//"use strict";
+"use strict";
 
 require('./polyfills');
 
@@ -569,7 +569,7 @@ exports.injectRequestObject = function injectRequestObject(page, request, custom
         context.stats = request._stats;
         context.actorRunId = actorRunId;
         context.actorTaskId = actorTaskId;
-        context.Apify = Apify;
+        //context.Apify = Apify;
         delete request._stats;
         var requestId = request.id;
         // attach special functions for user
