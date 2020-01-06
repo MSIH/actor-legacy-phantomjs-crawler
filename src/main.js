@@ -98,21 +98,9 @@ Apify.main(async () => {
     }
 
     //add inout into customdatato
-    input.customData = input;
-    var cache = [];
-log.info(JSON.stringify(input, function (key, value) {
-    if (typeof value === 'object' && value !== null) {
-        if (cache.indexOf(value) !== -1) {
-            // Duplicate reference found, discard key
-            return;
-        }
-        // Store value in our collection
-        cache.push(value);
-    }
-    return value;
-})
-);
-cache = null; // Enable garbage collection));
+    input.customData = {datasetName: input.datasetName};
+   
+log.info(JSON.stringify(input.customData);
              
     
     const requestQueue = await Apify.openRequestQueue();
