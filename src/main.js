@@ -100,7 +100,20 @@ Apify.main(async () => {
     //add inout into customdata
     
     input.customData= {input};
-    log.info(JSON.stringify(input));
+    var cache = [];
+    log.info(JSON.stringify(input,
+JSON.stringify(circ, function(key, value) {
+    if (typeof value === 'object' && value !== null) {
+        if (cache.indexOf(value) !== -1) {
+            // Duplicate reference found, discard key
+            return;
+        }
+        // Store value in our collection
+        cache.push(value);
+    }
+    return value;
+});
+cache = null; // Enable garbage collection));
     
     const requestQueue = await Apify.openRequestQueue();
     const dataset = await Apify.openDataset();
