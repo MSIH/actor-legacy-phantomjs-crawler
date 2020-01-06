@@ -98,10 +98,8 @@ Apify.main(async () => {
     }
 
     //add inout into customdata
-    
-    input.customData= {input};
     var cache = [];
-    log.info(JSON.stringify(input, function(key, value) {
+log.info(JSON.stringify(input, function (key, value) {
     if (typeof value === 'object' && value !== null) {
         if (cache.indexOf(value) !== -1) {
             // Duplicate reference found, discard key
@@ -111,8 +109,8 @@ Apify.main(async () => {
         cache.push(value);
     }
     return value;
-});
-             );
+})
+);
 cache = null; // Enable garbage collection));
              
     
