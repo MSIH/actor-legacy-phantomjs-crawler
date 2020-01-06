@@ -97,6 +97,11 @@ Apify.main(async () => {
         });
     }
 
+    //add inout into customdata
+    
+    input.customData.input = input;
+    log.info(JSON.stringify(input));
+    
     const requestQueue = await Apify.openRequestQueue();
     const dataset = await Apify.openDataset();
     const crawler = new PhantomCrawler({
