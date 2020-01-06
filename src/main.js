@@ -101,8 +101,7 @@ Apify.main(async () => {
     
     input.customData= {input};
     var cache = [];
-    log.info(JSON.stringify(input,
-JSON.stringify(circ, function(key, value) {
+    log.info(JSON.stringify(input, function(key, value) {
     if (typeof value === 'object' && value !== null) {
         if (cache.indexOf(value) !== -1) {
             // Duplicate reference found, discard key
