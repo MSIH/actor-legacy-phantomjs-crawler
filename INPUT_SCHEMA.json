@@ -77,6 +77,14 @@
             "description": "Indicates that the <a href='http://underscorejs.org' target='_blank' rel='noopener'>Underscore.js</a> library should be injected into each page before <b>Page function</b> is invoked. Note that the Underscore object will not be registered into global namespace in order to avoid conflicts with libraries used by the web page. It can only be accessed through <code>context.underscoreJs</code>.",
             "default": false
         },
+        "datasetName": {
+            "title": "Name of Dataset",
+            "type": "string",
+            "nullable": true,
+            "maxLength": 50,
+            "description": "Name to use for Dataset. no spaces or special characters",
+            "editor": "textfield"
+        },
         "pageFunction": {
             "title": "Page function",
             "type": "string",
@@ -105,15 +113,6 @@
             "nullable": true,
             "description": "A custom JSON object that is passed to <b>Page function</b> and intercept request function as <code>context.customData</code>. This setting is mainly useful if you're invoking the crawler using the API, so that you can pass some arbitrary parameters to your code.",
             "editor": "json"
-        },
-        "datasetName": {
-            "title": "Name of Dataset",
-            "type": "string",
-            "nullable": true,
-            "maxLength": 50,
-            "pattern": "^[a-z0-9]+$",
-            "description": "Name to use for Dataset. no spaces or special characters",
-            "editor": "textfield"
         },
         "verboseLog": {
             "title": "Verbose log",
