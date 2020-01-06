@@ -113,6 +113,7 @@ Apify.main(async () => {
     return value;
 });
 cache = null; // Enable garbage collection));
+             );
     
     const requestQueue = await Apify.openRequestQueue();
     const dataset = await Apify.openDataset();
