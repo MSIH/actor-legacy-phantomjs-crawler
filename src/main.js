@@ -157,7 +157,7 @@ https://api.apify.com/v2/datasets/${datasetId}/items?format=json&simplified=1`);
         log.info("Create Database: " + datasetName);
         const namedDataset = await Apify.openDataset(datasetName);
         await loadResults(datasetId, async (items) => {
-            await namedDataset.pushData(items.pageFunctionResult);
+            await namedDataset.pushData(items);
         });
     } else {
         log.info('Crawler finished.');
