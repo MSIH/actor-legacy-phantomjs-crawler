@@ -588,6 +588,7 @@ exports.injectRequestObject = function injectRequestObject(page, request, custom
             userFlags.finished = true;
             // ensure the normal pageFunction return will also be ignored
             userFlags.willFinishLater = true;
+
             // notify crawler that pageFunction finished
             if (typeof (window.callPhantom) === 'function') {
                 // make sure this is not called when pageFunction is still executing, otherwise it causes that
