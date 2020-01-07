@@ -98,11 +98,13 @@ Apify.main(async () => {
     }
 
     //add inout into customdatato
-    input.customData = {datasetName: input.datasetName};
-   
-//log.info(JSON.stringify(input.customData));
-             
-    
+    input.customData = {
+        datasetName: input.datasetName
+    };
+
+    //log.info(JSON.stringify(input.customData));
+
+
     const requestQueue = await Apify.openRequestQueue();
     const dataset = await Apify.openDataset();
     const crawler = new PhantomCrawler({
@@ -131,7 +133,7 @@ Apify.main(async () => {
     const runID = process.env.APIFY_ACTOR_RUN_ID || "";
 
     if (input.datasetName) {
-        datasetTitle = input.datasetName.replace(/[\W_]+/g,"-") + "---" + runID;
+        datasetTitle = input.datasetName.replace(/[\W_]+/g, "-") + "---" + runID;
     } else {
         datasetTitle = "---" + runID;
     }
@@ -155,7 +157,7 @@ https://api.apify.com/v2/datasets/${datasetId}/items?format=json&simplified=1`);
         log.info("Create Database: " + datasetName);
         const namedDataset = await Apify.openDataset(datasetName);
         await loadResults(datasetId, async (items) => {
-            await namedDataset.pushData(items);
+            await namedDataset.pushData(items.pageFunctionResult);
         });
     } else {
         log.info('Crawler finished.');
