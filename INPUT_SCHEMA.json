@@ -85,6 +85,14 @@
             "description": "Name to use for Dataset. no spaces or special characters",
             "editor": "textfield"
         },
+        
+               "databaseSimpleEmail": {
+            "title": "Send download link for Simplified",
+            "type": "boolean",
+            "nullable": true,
+            "description": "Send email to account owner's email address with link to download dataset in excel file using simplified format.",
+            "default": true
+        },
         "pageFunction": {
             "title": "Page function",
             "type": "string",
