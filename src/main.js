@@ -157,8 +157,24 @@ https://api.apify.com/v2/datasets/${datasetId}/items?format=json&simplified=1`);
         log.info("Create Database: " + datasetName);
         const namedDataset = await Apify.openDataset(datasetName);
         await loadResults(datasetId, async (items) => {
-            await namedDataset.pushData(items);
+            items.pageFunctionResult.forEach((itme) => {
+
+                await namedDataset.pushData(item);
+            });
         });
+
+        const user = await Apify.client.users.getUser();
+        log.info(`Sending notification to ${user.email}...`);
+
+        let sendmail = {
+            to: user.email,
+            subject: 'datasetName: ' + datasetName,
+            text: "Download Excel: https://api.apify.com/v2/datasets/" + namedDataset.datasetId + "/items?attachment=1&format=xlsx&simplified=1";
+        }
+        log.info(`sendmailto ${sendmail}...`);
+        // Sends mail
+        await Apify.call('apify/send-mail', sendmail);
+
     } else {
         log.info('Crawler finished.');
     }
