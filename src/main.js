@@ -160,7 +160,7 @@ Apify.main(async () => {
             subject: 'datasetName: ' + datasetName,
             text: "Download Excel: https://api.apify.com/v2/datasets/" + namedDataset.datasetId + "/items?attachment=1&format=xlsx&simplified=1"
         }
-        log.info(`sendmailto ${sendmail}...`);
+        log.info(`Email Sent`);
         // Sends mail
         await Apify.call('apify/send-mail', sendmail);
 
