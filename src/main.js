@@ -157,11 +157,9 @@ https://api.apify.com/v2/datasets/${datasetId}/items?format=json&simplified=1`);
         log.info("Create Database: " + datasetName);
         const namedDataset = await Apify.openDataset(datasetName);
         await loadResults(datasetId, async (items) => {
-            items.pageFunctionResult.forEach((itme) => {
-
-                await namedDataset.pushData(item);
-            });
+            await namedDataset.pushData(item);
         });
+
 
         const user = await Apify.client.users.getUser();
         log.info(`Sending notification to ${user.email}...`);
