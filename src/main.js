@@ -151,7 +151,7 @@ Apify.main(async () => {
             await namedDataset.pushData(items);
         });
 
-
+if (input.databaseSimpleEmail) {
         const user = await Apify.client.users.getUser();
         log.info(`Sending notification to ${user.email}...`);
 
@@ -163,6 +163,7 @@ Apify.main(async () => {
         log.info(`Email Sent`);
         // Sends mail
         await Apify.call('apify/send-mail', sendmail);
+}
 
 
         log.info(`Crawler finished.
