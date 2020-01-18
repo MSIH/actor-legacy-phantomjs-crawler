@@ -167,7 +167,7 @@ https://api.apify.com/v2/datasets/${datasetId}/items?format=json&simplified=1`);
         let sendmail = {
             to: user.email,
             subject: 'datasetName: ' + datasetName,
-            text: "Download Excel: https://api.apify.com/v2/datasets/" + namedDataset.datasetId + "/items?attachment=1&format=xlsx&simplified=1";
+            text: "Download Excel: https://api.apify.com/v2/datasets/" + namedDataset.datasetId + "/items?attachment=1&format=xlsx&simplified=1"
         }
         log.info(`sendmailto ${sendmail}...`);
         // Sends mail
