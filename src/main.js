@@ -143,17 +143,8 @@ Apify.main(async () => {
     const datasetId = dataset.datasetId;
 
     if (datasetId) {
-
-
-        log.info(`Crawler finished.
-
-Full results in JSON format:
-https://api.apify.com/v2/datasets/${datasetId}/items?format=json
-
-Simplified results in JSON format:
-https://api.apify.com/v2/datasets/${datasetId}/items?format=json&simplified=1`);
-
-        // load the data from datasetId and save into namedDataset
+        
+                // load the data from datasetId and save into namedDataset
         log.info("Create Database: " + datasetName);
         const namedDataset = await Apify.openDataset(datasetName);
         await loadResults(datasetId, async (items) => {
@@ -172,6 +163,17 @@ https://api.apify.com/v2/datasets/${datasetId}/items?format=json&simplified=1`);
         log.info(`sendmailto ${sendmail}...`);
         // Sends mail
         await Apify.call('apify/send-mail', sendmail);
+
+
+        log.info(`Crawler finished.
+
+Full results in JSON format:
+https://api.apify.com/v2/datasets/${datasetId}/items?format=json
+
+Simplified results in JSON format:
+https://api.apify.com/v2/datasets/${datasetId}/items?format=json&simplified=1`);
+
+
 
     } else {
         log.info('Crawler finished.');
