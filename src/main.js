@@ -143,27 +143,32 @@ Apify.main(async () => {
     const datasetId = dataset.datasetId;
 
     if (datasetId) {
-        
-                // load the data from datasetId and save into namedDataset
+
+        // load the data from datasetId and save into namedDataset
         log.info("Create Database: " + datasetName);
         const namedDataset = await Apify.openDataset(datasetName);
         await loadResults(datasetId, async (items) => {
             await namedDataset.pushData(items);
         });
 
-if (input.databaseSimpleEmail) {
-        const user = await Apify.client.users.getUser();
-        log.info(`Sending notification to ${user.email}...`);
+        log.info("KeyValueStore: " + datasetName);
+        const store = await Apify.openKeyValueStore(datasetName);
+        await store.setValue('input', input);
 
-        let sendmail = {
-            to: user.email,
-            subject: 'datasetName: ' + datasetName,
-            text: "Download Excel: https://api.apify.com/v2/datasets/" + namedDataset.datasetId + "/items?attachment=1&format=xlsx&simplified=1"
+
+        if (input.databaseSimpleEmail) {
+            const user = await Apify.client.users.getUser();
+            log.info(`Sending notification to ${user.email}...`);
+
+            let sendmail = {
+                to: user.email,
+                subject: 'datasetName: ' + datasetName,
+                text: "Download Excel: https://api.apify.com/v2/datasets/" + namedDataset.datasetId + "/items?attachment=1&format=xlsx&simplified=1"
+            }
+            log.info(`Email Sent`);
+            // Sends mail
+            await Apify.call('apify/send-mail', sendmail);
         }
-        log.info(`Email Sent`);
-        // Sends mail
-        await Apify.call('apify/send-mail', sendmail);
-}
 
 
         log.info(`Crawler finished.
