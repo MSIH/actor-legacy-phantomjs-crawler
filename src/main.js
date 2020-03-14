@@ -98,11 +98,11 @@ Apify.main(async () => {
     }
 
     //add inout into customdatato
-    input.customData = {
-        datasetName: input.datasetName
-    };
+    if (input.datasetName){
+        input.customData.datasetName = input.datasetName;
+    }
 
-    //log.info(JSON.stringify(input.customData));
+    log.info(JSON.stringify(input.customData));
 
 
     const requestQueue = await Apify.openRequestQueue();
