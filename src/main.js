@@ -98,7 +98,7 @@ Apify.main(async () => {
     }
 
     //add inout into customdatato
-    if (input.datasetName){
+    if (input.datasetName) {
         input.customData.datasetName = input.datasetName;
     }
 
@@ -133,12 +133,12 @@ Apify.main(async () => {
     const runID = process.env.APIFY_ACTOR_RUN_ID || "";
 
     if (input.datasetName) {
-        datasetTitle = input.datasetName.replace(/[\W_]+/g, "-") + "---" + runID;
+        datasetTitle = input.datasetName.replace(/[\W_]+/g, "-") + "--" + runID;
     } else {
-        datasetTitle = "---" + runID;
+        datasetTitle = "--" + runID;
     }
 
-    const datasetName = task.name + "---" + datasetTitle;
+    const datasetName = datasetTitle + "--" + task.name;
 
     const datasetId = dataset.datasetId;
 
