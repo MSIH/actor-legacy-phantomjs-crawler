@@ -68,6 +68,20 @@
             "nullable": true,
             "description": "Indicates that the <a href='http://underscorejs.org' target='_blank' rel='noopener'>Underscore.js</a> library should be injected into each page before <b>Page function</b> is invoked. Note that the Underscore object will not be registered into global namespace in order to avoid conflicts with libraries used by the web page. It can only be accessed through <code>context.underscoreJs</code>.",
             "default": false
+        },        
+        "sendEmailNotification": {
+            "title": "Send email notification to account owner when task ends",
+            "type": "boolean",
+            "nullable": true,
+            "description": "Send email notification to account owner's email address when task end's successful, fail, times out, or aborted.",
+            "default": true
+        },      
+        "databaseSimpleEmail": {
+            "title": "Send download link for Simplified",
+            "type": "boolean",
+            "nullable": true,
+            "description": "Send email to account owner's email address with link to download dataset in excel file using simplified format.",
+            "default": true
         },
         "datasetName": {
             "title": "Name of Dataset",
@@ -89,20 +103,6 @@
             "nullable": true,
             "description": "A custom JSON object that is passed to <b>Page function</b> and intercept request function as <code>context.customData</code>. This setting is mainly useful if you're invoking the crawler using the API, so that you can pass some arbitrary parameters to your code.",
             "editor": "json"
-        },
-        "sendEmailNotification": {
-            "title": "Send email notification to account owner when task ends",
-            "type": "boolean",
-            "nullable": true,
-            "description": "Send email notification to account owner's email address when task end's successful, fail, times out, or aborted.",
-            "default": true
-        },      
-        "databaseSimpleEmail": {
-            "title": "Send download link for Simplified",
-            "type": "boolean",
-            "nullable": true,
-            "description": "Send email to account owner's email address with link to download dataset in excel file using simplified format.",
-            "default": true
         },
         "pageFunction": {
             "title": "Page function",
