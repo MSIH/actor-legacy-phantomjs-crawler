@@ -2,14 +2,7 @@
     "title": "Schema for the apify/phantomjs-extractor actor",
     "type": "object",
     "schemaVersion": 1,
-    "properties": {
-        "sendEmailNotification": {
-            "title": "Send email notification to account owner when task ends",
-            "type": "boolean",
-            "nullable": true,
-            "description": "Send email notification to account owner's email address when task end's successful, fail, times out, or aborted.",
-            "default": true
-        },
+    "properties": {        
         "startUrls": {
             "title": "Start URLs",
             "type": "array",
@@ -61,7 +54,6 @@
             "default": {
                 "useApifyProxy": true
             }
-
         },
         "injectJQuery": {
             "title": "Inject jQuery",
@@ -85,8 +77,27 @@
             "description": "Name to use for Dataset. no spaces or special characters",
             "editor": "textfield"
         },
-        
-               "databaseSimpleEmail": {
+        "customData": {
+            "title": "Custom data",
+            "type": [
+                "object",
+                "string",
+                "integer",
+                "boolean",
+                "array"
+            ],
+            "nullable": true,
+            "description": "A custom JSON object that is passed to <b>Page function</b> and intercept request function as <code>context.customData</code>. This setting is mainly useful if you're invoking the crawler using the API, so that you can pass some arbitrary parameters to your code.",
+            "editor": "json"
+        },
+        "sendEmailNotification": {
+            "title": "Send email notification to account owner when task ends",
+            "type": "boolean",
+            "nullable": true,
+            "description": "Send email notification to account owner's email address when task end's successful, fail, times out, or aborted.",
+            "default": true
+        },      
+        "databaseSimpleEmail": {
             "title": "Send download link for Simplified",
             "type": "boolean",
             "nullable": true,
@@ -109,19 +120,7 @@
             "prefill": "function interceptRequest(context, newRequest) {\n    // called whenever the crawler finds a link to a new page,\n    // use it to override default behavior\n    return newRequest;\n}\n",
             "editor": "javascript"
         },
-        "customData": {
-            "title": "Custom data",
-            "type": [
-                "object",
-                "string",
-                "integer",
-                "boolean",
-                "array"
-            ],
-            "nullable": true,
-            "description": "A custom JSON object that is passed to <b>Page function</b> and intercept request function as <code>context.customData</code>. This setting is mainly useful if you're invoking the crawler using the API, so that you can pass some arbitrary parameters to your code.",
-            "editor": "json"
-        },
+        
         "verboseLog": {
             "title": "Verbose log",
             "type": "boolean",
