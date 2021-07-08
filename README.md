@@ -1,78 +1,33 @@
-# Legacy PhantomJS Crawler
+# MSIH PhantomJS Crawler for Apify
 
-This actor implements the legacy Apify Crawler product.
-It uses the [PhantomJS](http://phantomjs.org/) headless browser to recursively
-crawl websites and extract data from them using front-end JavaScript code.
+- crawls 6 to 10 times more pages than puppeteer per Compute Unit
+- send email when crawl is complete
+- improved input screen
 
-Note that PhantomJS is no longer being developed by the community
-and might be easily detected and blocked by target websites.
-Therefore, for new projects, we recommend that you use the Web Scraper
-([`apify/web-scraper`](https://apify.com/apify/web-scraper)) actor,
-which provides similar functionality, but is based on the modern headless Chrome browser.
-
-For more details on how to migrate your crawlers to this actor,
-please read this <a href="https://blog.apify.com/apify-crawler-to-be-replaced-by-apify-actors-c67df1366e00">blog post</a>.
-
-## Compatibility with legacy Apify Crawler
-
-Apify Crawler used to be a core product of Apify, but in April 2019 it was deprecated in favor of the more general
-[Apify Actors](https://apify.com/actors) product.
-This actor serves as a replacement of the legacy product and provides equivalent interface and functionality,
-in order to enable users to seamlessly migrate their crawlers.
-Note that there are several differences between this actor and legacy Apify Crawler:
-
-- The **Cookies persistence** setting of **Over all crawler runs**
-  is only supported when running the actor as a [task](https://apify.com/docs/tasks).
-  When you run the actor directly and use this setting,
-  the actor will fail and print an error to the log.
-- In **Page function**, the `context` object passed to the function has slightly different properties:
-  - The `stats` object contains only a subset of the original statistics.
-  See `context` details in [Page function](#page-function) section.
-  - The `actExecutionId` and `actId` properties are not defined and were replaced by `actorRunId` and `actorTaskId`, respectively.
-- The **Finish webhook URL** and **Finish webhook data** fields are still supported.
-  However, the POST payload passed to the webhook has a different format.
-  See [Finish webhook](#finish-webhook) below for details.
-- The actor supports legacy **proxy settings** fields `proxyType`, `proxyGroups` and `customProxies`,
-  but their values are not checked. If these settings are invalid,
-  the actor will start normally and might crawl pages with invalid proxy settings,
-  most likely producing invalid results.
-  It is recommended to use the new **Proxy configuration** (`proxyConfiguration`)
-  field instead, which is correctly validated before the actor is started.
-  Beware that **Custom proxies** in the new **Proxy configuration** no longer support SOCKS5 proxies,
-  and they only accept HTTP proxies. If you need SOCKS5,
-  please contact [support@apify.com](mailto:support@apify.com)  
-- The **Test URL** feature is not supported.
-- The crawling results are stored into an Apify dataset instead of the specialized
-  storage for crawling results used by the old Crawler.
-  The dataset supports most of the legacy API query parameters
-  in order to emulate the same results format. However, there might be some small
-  incompatibilities. For details, see [Crawling results](#crawling-results).
+This uses the [PhantomJS](http://phantomjs.org/) headless browser to recursively
+crawl websites and extract data from them using front-end JavaScript code. PhantomJS is no longer being developed by the community
+and might be detected and blocked by websites. This crawler is based on the Apify Legacy PhantomJS Crawler.
 
 ## Overview
 
-This actor provides a web crawler for developers that enables the scraping of data from
-any website using the primary programming language of the web, JavaScript.
+This actor provides a web crawler that enables the scraping of data from any website using the primary programming language of the web, JavaScript.
 
-In order to extract structured data from a website, you only need two things. First, tell the crawler which pages it
-should visit (see <a href="#start-urls">Start URLs</a> and <a href="#pseudo-urls">Pseudo-URLs</a>) and second, define
+In order to extract structured data from a website, you only need two things. 
+
+1. First, tell the crawler which pages it
+should visit (see <a href="#start-urls">Start URLs</a> and <a href="#pseudo-urls">Pseudo-URLs</a>) and 
+
+2. second, define
 a JavaScript code that will be executed on every web page visited in order to extract the data from it
 (see <a href="#page-function">Page function</a>).
+
 The crawler is a full-featured web browser which loads and interprets JavaScript and the code you provide is simply
 executed in the context of the pages it visits. This means that writing your data-extraction code is very similar
 to writing JavaScript code in front-end development, you can even use any client-side libraries such as
 <a href="http://jquery.com" target="_blank" rel="noopener">jQuery</a> or
 <a href="http://underscorejs.org" target="_blank" rel="noopener">Underscore.js</a>.
 
-Imagine the crawler as a guy sitting in front of a web browser. Let's call him Bob. Bob opens a start URL and waits
-for the page to load, executes your JavaScript code using a developer console, writes down the result and then
-right-clicks all links on the web page to open them in new browser tabs.
-After that, Bob closes the current tab, goes to the next tab and repeats the same action again.
-Bob is pretty smart and skips pages that he has already visited.
-When there are no more pages, he is done. And this is where the magic happens.
-Bob would need about a month to click through a few hundred pages.
-Apify can do it in a few seconds and makes fewer mistakes than Bob.
-
-More formally, the crawler repeats the following steps:
+The crawler repeats the following steps:
 
 <ol>
     <li>Add each of the <a href="#start-urls">Start URLs</a> to the crawling queue.</li>

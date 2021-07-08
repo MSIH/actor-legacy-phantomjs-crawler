@@ -15,6 +15,7 @@ var fs = require('fs');
 var utils = require('./utils');
 var pseudoUrl = require('./pseudourl');
 
+
 /**
  * Loads a configuration from a JavaScript or JSON file and validates it.
  */
@@ -567,6 +568,7 @@ exports.injectRequestObject = function injectRequestObject(page, request, custom
         context.stats = request._stats;
         context.actorRunId = actorRunId;
         context.actorTaskId = actorTaskId;
+        //context.Apify = Apify;
         delete request._stats;
         var requestId = request.id;
         // attach special functions for user
@@ -586,6 +588,7 @@ exports.injectRequestObject = function injectRequestObject(page, request, custom
             userFlags.finished = true;
             // ensure the normal pageFunction return will also be ignored
             userFlags.willFinishLater = true;
+
             // notify crawler that pageFunction finished
             if (typeof (window.callPhantom) === 'function') {
                 // make sure this is not called when pageFunction is still executing, otherwise it causes that

@@ -2,7 +2,7 @@
     "title": "Schema for the apify/phantomjs-extractor actor",
     "type": "object",
     "schemaVersion": 1,
-    "properties": {
+    "properties": {        
         "startUrls": {
             "title": "Start URLs",
             "type": "array",
@@ -14,12 +14,10 @@
             "minItems": 1,
             "patternKey": "^.{0,100}$",
             "patternValue": "^([hH][tT][tT][pP]:\\/\\/|[hH][tT][tT][pP][sS]:\\/\\/)",
-            "prefill": [
-                {
-                    "key": "START",
-                    "value": "https://www.example.com/"
-                }
-            ]
+            "prefill": [{
+                "key": "START",
+                "value": "https://apify.com/"
+            }]
         },
         "crawlPurls": {
             "title": "Pseudo-URLs",
@@ -31,12 +29,10 @@
             "placeholderValue": "Pseudo-URL",
             "patternKey": "^.{0,100}$",
             "patternValue": "^([hH][tT][tT][pP]:\\/\\/|[hH][tT][tT][pP][sS]:\\/\\/)",
-            "prefill": [
-                {
-                    "key": "MY_LABEL",
-                    "value": "https://www.example.com/[.*]"
-                }
-            ]
+            "prefill": [{
+                "key": "MY_LABEL",
+                "value": "https://www.example.com/[.*]"
+            }]
         },
         "clickableElementsSelector": {
             "title": "Clickable elements",
@@ -45,6 +41,68 @@
             "description": "CSS selector used to find links to other web pages. Leave empty to ignore all links.<br><br>For example: <code>a[href]</code>",
             "editor": "textfield",
             "prefill": "a:not([rel=nofollow])"
+        },
+        "proxyConfiguration": {
+            "title": "Proxy configuration",
+            "type": "object",
+            "nullable": false,
+            "description": "Specifies the type of proxy servers that will be used by the crawler in order to hide its origin.",
+            "editor": "proxy",
+            "prefill": {
+                "useApifyProxy": true
+            },
+            "default": {
+                "useApifyProxy": true
+            }
+        },
+        "injectJQuery": {
+            "title": "Inject jQuery",
+            "type": "boolean",
+            "nullable": true,
+            "description": "Indicates that the <a href='http://jquery.com' target='_blank' rel='noopener'>jQuery</a> library should be injected into each page before <b>Page function</b> is invoked. Note that the jQuery object will not be registered into global namespace in order to avoid conflicts with libraries used by the web page. It can only be accessed through <code>context.jQuery</code>.",
+            "default": true
+        },
+        "injectUnderscoreJs": {
+            "title": "Inject Underscore.js",
+            "type": "boolean",
+            "nullable": true,
+            "description": "Indicates that the <a href='http://underscorejs.org' target='_blank' rel='noopener'>Underscore.js</a> library should be injected into each page before <b>Page function</b> is invoked. Note that the Underscore object will not be registered into global namespace in order to avoid conflicts with libraries used by the web page. It can only be accessed through <code>context.underscoreJs</code>.",
+            "default": false
+        },        
+        "sendEmailNotification": {
+            "title": "Send email notification to account owner when task ends",
+            "type": "boolean",
+            "nullable": true,
+            "description": "Send email notification to account owner's email address when task end's successful, fail, times out, or aborted.",
+            "default": true
+        },      
+        "databaseSimpleEmail": {
+            "title": "Send download link for Simplified",
+            "type": "boolean",
+            "nullable": true,
+            "description": "Send email to account owner's email address with link to download dataset in excel file using simplified format.",
+            "default": true
+        },
+        "datasetName": {
+            "title": "Name of Dataset",
+            "type": "string",
+            "nullable": true,
+            "maxLength": 50,
+            "description": "Name to use for Dataset. no spaces or special characters",
+            "editor": "textfield"
+        },
+        "customData": {
+            "title": "Custom data",
+            "type": [
+                "object",
+                "string",
+                "integer",
+                "boolean",
+                "array"
+            ],
+            "nullable": true,
+            "description": "A custom JSON object that is passed to <b>Page function</b> and intercept request function as <code>context.customData</code>. This setting is mainly useful if you're invoking the crawler using the API, so that you can pass some arbitrary parameters to your code.",
+            "editor": "json"
         },
         "pageFunction": {
             "title": "Page function",
@@ -62,41 +120,26 @@
             "prefill": "function interceptRequest(context, newRequest) {\n    // called whenever the crawler finds a link to a new page,\n    // use it to override default behavior\n    return newRequest;\n}\n",
             "editor": "javascript"
         },
-        "considerUrlFragment": {
-            "title": "URL #fragments identify unique pages",
+        
+        "verboseLog": {
+            "title": "Verbose log",
             "type": "boolean",
             "nullable": true,
-            "description": "Indicates that the URL fragment identifier (i.e. <code>http://example.com/page#<b>this-guy-here</b></code>) should be considered when matching a URL against a Pseudo-URL or when checking whether a page has already been visited. Typically, URL fragments are used as internal page anchors and therefore they should be ignored because they don't represent separate pages. However, many AJAX-based website nowadays use URL fragment to represent page parameters; in such cases, this option should be enabled.",
-            "default": false,
-            "groupCaption": "Options",
-            "groupDescription": "Various crawler settings"
+            "description": "If enabled, the log will also contain DEBUG messages. Note that this setting will dramatically slow down the crawler as well as your web browser and increase the log size.",
+            "default": false
         },
         "loadImages": {
             "title": "Download HTML images",
             "type": "boolean",
             "nullable": true,
             "description": "Indicates whether the crawler should load HTML images, both those included using the <code>&lt;img&gt;</code> tag as well as those included in CSS styles. Disable this feature after you have fine-tuned your crawler in order to increase crawling performance and reduce your bandwidth costs.",
-            "default": true
+            "default": false
         },
         "loadCss": {
             "title": "Download CSS files",
             "type": "boolean",
             "nullable": true,
             "description": "Indicates whether the crawler should load CSS stylesheet files. Disable this feature after you have fine-tuned your crawler in order to increase crawling performance and reduce your bandwidth costs.",
-            "default": true
-        },
-        "injectJQuery": {
-            "title": "Inject jQuery",
-            "type": "boolean",
-            "nullable": true,
-            "description": "Indicates that the <a href='http://jquery.com' target='_blank' rel='noopener'>jQuery</a> library should be injected into each page before <b>Page function</b> is invoked. Note that the jQuery object will not be registered into global namespace in order to avoid conflicts with libraries used by the web page. It can only be accessed through <code>context.jQuery</code>.",
-            "default": true
-        },
-        "injectUnderscoreJs": {
-            "title": "Inject Underscore.js",
-            "type": "boolean",
-            "nullable": true,
-            "description": "Indicates that the <a href='http://underscorejs.org' target='_blank' rel='noopener'>Underscore.js</a> library should be injected into each page before <b>Page function</b> is invoked. Note that the Underscore object will not be registered into global namespace in order to avoid conflicts with libraries used by the web page. It can only be accessed through <code>context.underscoreJs</code>.",
             "default": false
         },
         "ignoreRobotsTxt": {
@@ -113,11 +156,11 @@
             "description": "Indicates that child frames included using FRAME or IFRAME tags will not be loaded by the crawler. This might improve crawling performance. As a side-effect, JavaScript redirects issued by the page before it was completely loaded will not be performed, which might be useful in certain situations.",
             "default": false
         },
-        "verboseLog": {
-            "title": "Verbose log",
+        "considerUrlFragment": {
+            "title": "URL #fragments identify unique pages",
             "type": "boolean",
             "nullable": true,
-            "description": "If enabled, the log will also contain DEBUG messages. Note that this setting will dramatically slow down the crawler as well as your web browser and increase the log size.",
+            "description": "Indicates that the URL fragment identifier (i.e. <code>http://example.com/page#<b>this-guy-here</b></code>) should be considered when matching a URL against a Pseudo-URL or when checking whether a page has already been visited. Typically, URL fragments are used as internal page anchors and therefore they should be ignored because they don't represent separate pages. However, many AJAX-based website nowadays use URL fragment to represent page parameters; in such cases, this option should be enabled.",
             "default": false
         },
         "disableWebSecurity": {
@@ -176,31 +219,31 @@
             "title": "Resource timeout",
             "type": "integer",
             "nullable": true,
-            "description": "Timeout for network resources loaded by the crawler, in milliseconds.",
-            "minimum": 100,
-            "maximum": 1000000,
-            "default": 30000,
-            "unit": "milliseconds"
+            "description": "Timeout for network resources loaded by the crawler, in seconds.",
+            "minimum": 1,
+            "maximum": 3600,
+            "default": 60,
+            "unit": "seconds"
         },
         "pageLoadTimeout": {
             "title": "Page load timeout",
             "type": "integer",
             "nullable": true,
-            "description": "Timeout for web page load, in milliseconds. If the web page does not load in this time frame, it is considered to have failed and will be retried, similarly as with other page load errors.",
-            "minimum": 100,
-            "maximum": 1000000,
-            "default": 60000,
-            "unit": "milliseconds"
+            "description": "Timeout for web page load, in seconds. If the web page does not load in this time frame, it is considered to have failed and will be retried, similarly as with other page load errors.",
+            "minimum": 1,
+            "maximum": 3600,
+            "default": 60,
+            "unit": "seconds"
         },
         "pageFunctionTimeout": {
             "title": "Page function timeout",
             "type": "integer",
             "nullable": true,
-            "description": "Timeout for the asynchronous part of the <b>Page function</b>, in milliseconds. Note that this value is only applied if your page function runs code in the background, i.e. when it invokes <code>context.willFinishLater()</code>. The page function itself always runs to completion regardless of the timeout.",
-            "minimum": 0,
-            "maximum": 3600000,
-            "default": 600000,
-            "unit": "milliseconds"
+            "description": "Timeout for the asynchronous part of the <b>Page function</b>, in seconds. Note that this value is only applied if your page function runs code in the background, i.e. when it invokes <code>context.willFinishLater()</code>. The page function itself always runs to completion regardless of the timeout.",
+            "minimum": 1,
+            "maximum": 3600,
+            "default": 60,
+            "unit": "seconds"
         },
         "maxInfiniteScrollHeight": {
             "title": "Infinite scroll height",
@@ -215,11 +258,11 @@
             "title": "Delay between requests",
             "type": "integer",
             "nullable": true,
-            "description": "This option forces the crawler to ensure a minimum time interval between opening two web pages, in order to prevent it from overloading the target server. The actual minimum time is a random value drawn from a Gaussian distribution with a mean specified by your setting (in milliseconds) and a standard deviation corresponding to 25% of the mean. The minimum value is 1000 milliseconds, the crawler never issues requests in shorter intervals than 1000 milliseconds.",
-            "minimum": 1000,
-            "maximum": 1000000,
-            "default": 1000,
-            "unit": "milliseconds"
+            "description": "This option forces the crawler to ensure a minimum time interval between opening two web pages, in order to prevent it from overloading the target server. The actual minimum time is a random value drawn from a Gaussian distribution with a mean specified by your setting (in seconds) and a standard deviation corresponding to 25% of the mean. The minimum value is 1 second, the crawler never issues requests in shorter intervals than 1000 seconds.",
+            "minimum": 1,
+            "maximum": 3600,
+            "default": 1,
+            "unit": "seconds"
         },
         "maxCrawledPagesPerSlave": {
             "title": "Max pages per IP address",
@@ -258,13 +301,6 @@
             "placeholderKey": "Name",
             "placeholderValue": "Value"
         },
-        "proxyConfiguration": {
-            "title": "Proxy configuration",
-            "type": "object",
-            "nullable": false,
-            "description": "Specifies the type of proxy servers that will be used by the crawler in order to hide its origin.",
-            "editor": "proxy"
-        },
         "proxyType": {
             "title": "Proxy type (legacy)",
             "type": "string",
@@ -286,19 +322,6 @@
             "nullable": true,
             "description": "Specifies Apify Proxy groups to be used when <b>proxyType</b> is <code>CUSTOM</code>. Each proxy should be specified in the <code>scheme://user:password@host:port</code> format, multiple proxies should be separated by a space or new line. <br><br>This is a legacy option only kept for backwards compatibility - use <b>proxyConfiguration</b> instead!",
             "editor": "hidden"
-        },
-        "customData": {
-            "title": "Custom data",
-            "type": [
-                "object",
-                "string",
-                "integer",
-                "boolean",
-                "array"
-            ],
-            "nullable": true,
-            "description": "A custom JSON object that is passed to <b>Page function</b> and intercept request function as <code>context.customData</code>. This setting is mainly useful if you're invoking the crawler using the API, so that you can pass some arbitrary parameters to your code.",
-            "editor": "json"
         },
         "finishWebhookUrl": {
             "title": "Finish webhook URL",
